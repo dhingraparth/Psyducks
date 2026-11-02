@@ -17,6 +17,7 @@ import {
   ChevronRight,
   Check
 } from 'lucide-react';
+import SmartImage from './SmartImage';
 import { soundEngine } from '../utils/audio';
 
 export default function PropertyDetailModal({
@@ -95,16 +96,16 @@ export default function PropertyDetailModal({
             </p>
           </div>
 
-          {/* Photo Gallery Grid */}
+          {/* Photo Gallery Grid with SmartImage (Never Black) */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
             {/* Main large image */}
-            <div className="md:col-span-2 aspect-[16/10] rounded-2xl overflow-hidden shadow-soft-sm relative">
-              <img
+            <div className="md:col-span-2 aspect-[16/10] rounded-2xl overflow-hidden shadow-soft-sm relative bg-ivory-200 dark:bg-charcoal-600">
+              <SmartImage
                 src={property.images[selectedPhotoIndex]}
                 alt={property.title}
-                className="w-full h-full object-cover transition-all duration-500"
+                className="w-full h-full"
               />
-              <span className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-md text-white text-[10px] font-mono px-2.5 py-1 rounded-full uppercase tracking-wider">
+              <span className="absolute bottom-3 left-3 bg-black/60 backdrop-blur-md text-white text-[10px] font-mono px-2.5 py-1 rounded-full uppercase tracking-wider z-10">
                 Photo {selectedPhotoIndex + 1} of {property.images.length}
               </span>
             </div>
@@ -118,11 +119,11 @@ export default function PropertyDetailModal({
                     soundEngine.playClick();
                     setSelectedPhotoIndex(idx);
                   }}
-                  className={`relative aspect-[16/10] rounded-xl overflow-hidden border-2 transition-all ${
+                  className={`relative aspect-[16/10] rounded-xl overflow-hidden border-2 transition-all bg-ivory-200 dark:bg-charcoal-600 ${
                     selectedPhotoIndex === idx ? 'border-terracotta shadow-md scale-[1.02]' : 'border-transparent opacity-75 hover:opacity-100'
                   }`}
                 >
-                  <img src={img} alt={`Preview ${idx}`} className="w-full h-full object-cover" />
+                  <SmartImage src={img} alt={`Preview ${idx}`} className="w-full h-full" />
                 </button>
               ))}
             </div>
@@ -161,15 +162,15 @@ export default function PropertyDetailModal({
             </p>
           </div>
 
-          {/* Flatmate Profiles */}
+          {/* Flatmate Profiles with SmartImage Avatars */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-bold text-charcoal dark:text-ivory flex items-center gap-2">
                 <Users className="w-4 h-4 text-sage" />
                 <span>Meet Your Future Housemates</span>
               </h2>
-              <span className="text-xs text-charcoal-300 dark:text-charcoal-200">
-                100% Background & Rhythm Verified
+              <span className="text-xs text-charcoal-300 dark:text-charcoal-200 font-medium">
+                100% Aadhaar & Background Verified
               </span>
             </div>
 
@@ -180,11 +181,14 @@ export default function PropertyDetailModal({
                   className="p-5 rounded-2xl glass-card border border-ivory-300 dark:border-charcoal-500 space-y-3"
                 >
                   <div className="flex items-center gap-3">
-                    <img
-                      src={fm.avatar}
-                      alt={fm.name}
-                      className="w-12 h-12 rounded-full object-cover ring-2 ring-terracotta/50"
-                    />
+                    <div className="w-12 h-12 rounded-full overflow-hidden ring-2 ring-terracotta/50 shrink-0">
+                      <SmartImage
+                        src={fm.avatar}
+                        alt={fm.name}
+                        isAvatar={true}
+                        className="w-full h-full"
+                      />
+                    </div>
                     <div>
                       <h4 className="font-bold text-sm text-charcoal dark:text-ivory flex items-center gap-1.5">
                         <span>{fm.name}, {fm.age}</span>
@@ -261,7 +265,7 @@ export default function PropertyDetailModal({
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 rounded-2xl bg-ivory-200/60 dark:bg-charcoal-600 border border-ivory-300 dark:border-charcoal-500 text-center">
               <div>
                 <div className="text-2xl font-bold text-charcoal dark:text-ivory font-mono">{property.neighborhoodScores.transit}</div>
-                <div className="text-xs text-charcoal-300 dark:text-charcoal-200 mt-1">Transit Score</div>
+                <div className="text-xs text-charcoal-300 dark:text-charcoal-200 mt-1">Metro & Transit</div>
               </div>
               <div>
                 <div className="text-2xl font-bold text-charcoal dark:text-ivory font-mono">{property.neighborhoodScores.walkability}</div>
@@ -278,16 +282,16 @@ export default function PropertyDetailModal({
             </div>
           </div>
 
-          {/* Bottom Sticky Action Banner */}
+          {/* Bottom Sticky Action Banner in INR */}
           <div className="p-6 rounded-3xl bg-charcoal text-ivory dark:bg-charcoal-600 border border-charcoal-500 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-soft-xl">
             <div>
               <div className="text-xs uppercase tracking-wider text-ivory-300 font-mono">Monthly All-Inclusive Rent</div>
               <div className="text-3xl font-bold font-sans mt-0.5">
-                ${property.pricePerMonth}
+                ₹{property.pricePerMonth.toLocaleString('en-IN')}
                 <span className="text-sm font-normal text-ivory-300"> / month</span>
               </div>
               <p className="text-xs text-sage-light mt-1">
-                Zero broker fee • Deposit: ${property.deposit} • Minimum 3-month lease
+                Zero brokerage fee • Deposit: ₹{property.deposit.toLocaleString('en-IN')} (2 months) • Lock-in 3 months
               </p>
             </div>
 

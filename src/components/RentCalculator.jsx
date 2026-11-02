@@ -23,23 +23,23 @@ import { soundEngine } from '../utils/audio';
 export default function RentCalculator({
   onShowToast
 }) {
-  const [totalRent, setTotalRent] = useState(3800);
+  const [totalRent, setTotalRent] = useState(65000);
   const [tenantsCount, setTenantsCount] = useState(3);
   const [copied, setCopied] = useState(false);
 
-  // Utility expenses
-  const [wifiCost, setWifiCost] = useState(80);
-  const [powerCost, setPowerCost] = useState(160);
-  const [waterCost, setWaterCost] = useState(60);
-  const [cleaningCost, setCleaningCost] = useState(200);
+  // Indian utility expenses
+  const [wifiCost, setWifiCost] = useState(999);
+  const [powerCost, setPowerCost] = useState(3800);
+  const [waterCost, setWaterCost] = useState(2500);
+  const [cleaningCost, setCleaningCost] = useState(4500); // Cook + Daily Maid
 
-  // Tenant specifics
+  // Tenant specifics in India
   const [tenantRooms, setTenantRooms] = useState([
-    { id: 1, name: "Tenant 1 (Master)", sqft: 280, privateBath: true, balcony: true, parking: true },
-    { id: 2, name: "Tenant 2 (East Suite)", sqft: 210, privateBath: false, balcony: false, parking: false },
-    { id: 3, name: "Tenant 3 (Courtyard)", sqft: 180, privateBath: false, balcony: false, parking: false },
-    { id: 4, name: "Tenant 4 (Loft)", sqft: 160, privateBath: false, balcony: false, parking: false },
-    { id: 5, name: "Tenant 5 (Studio)", sqft: 150, privateBath: false, balcony: false, parking: false }
+    { id: 1, name: "Room 1 (Master + Attached Bath)", sqft: 280, privateBath: true, balcony: true, parking: true },
+    { id: 2, name: "Room 2 (East Balcony Suite)", sqft: 220, privateBath: false, balcony: true, parking: false },
+    { id: 3, name: "Room 3 (Courtyard Room)", sqft: 180, privateBath: false, balcony: false, parking: false },
+    { id: 4, name: "Room 4 (Study Loft)", sqft: 160, privateBath: false, balcony: false, parking: false },
+    { id: 5, name: "Room 5 (Studio Suite)", sqft: 150, privateBath: false, balcony: false, parking: false }
   ]);
 
   const updateTenant = (index, field, value) => {
@@ -54,24 +54,18 @@ export default function RentCalculator({
     setTenantsCount(count);
   };
 
-  // Active tenants
   const activeTenants = tenantRooms.slice(0, tenantsCount);
 
-  // Calculate Fair Share
+  // Calculate Fair Share in INR
   const calculations = useMemo(() => {
     const totalSqft = activeTenants.reduce((acc, t) => acc + Number(t.sqft), 0);
     const totalUtilities = wifiCost + powerCost + waterCost + cleaningCost;
     const perPersonUtility = Math.round(totalUtilities / tenantsCount);
 
-    // Calculate weighted points
-    // Base points = sqft
-    // Private bath adds +18% value to room weight
-    // Balcony adds +8% value
-    // Parking is a flat addition
     const weightedTenants = activeTenants.map((t) => {
       let weight = Number(t.sqft);
-      if (t.privateBath) weight *= 1.18;
-      if (t.balcony) weight *= 1.08;
+      if (t.privateBath) weight *= 1.18; // 18% premium for attached bath
+      if (t.balcony) weight *= 1.08; // 8% premium for private balcony
       return { ...t, weight };
     });
 
@@ -79,7 +73,7 @@ export default function RentCalculator({
 
     const breakdown = weightedTenants.map((t) => {
       const rentShare = Math.round((t.weight / totalWeight) * totalRent);
-      const parkingFee = t.parking ? 120 : 0;
+      const parkingFee = t.parking ? 1500 : 0; // ₹1,500/mo parking spot
       const totalDue = rentShare + perPersonUtility + parkingFee;
 
       return {
@@ -102,10 +96,10 @@ export default function RentCalculator({
 
   const copyToClipboard = () => {
     soundEngine.playSuccess();
-    const text = `CoHaven Fair-Share Rent Breakdown:\nTotal Rent: $${totalRent}/mo\nShared Utilities: $${calculations.totalUtilities}/mo ($${calculations.perPersonUtility}/person)\n\n` +
+    const text = `CoHaven Fair-Share Rent Breakdown (INR):\nTotal Flat Rent: ₹${totalRent.toLocaleString('en-IN')}/mo\nShared Utilities: ₹${calculations.totalUtilities.toLocaleString('en-IN')}/mo (₹${calculations.perPersonUtility.toLocaleString('en-IN')}/person)\n\n` +
       calculations.breakdown.map(t => 
-        `• ${t.name}: $${t.totalDue}/mo (Rent: $${t.rentShare}, Utilities: $${t.utilityShare}${t.parkingFee ? `, Parking: $${t.parkingFee}` : ''})`
-      ).join('\n') + `\n\nGenerated via CoHaven Fair-Share Engine`;
+        `• ${t.name}: ₹${t.totalDue.toLocaleString('en-IN')}/mo (Base: ₹${t.rentShare.toLocaleString('en-IN')}, Utilities: ₹${t.utilityShare.toLocaleString('en-IN')}${t.parkingFee ? `, Parking: ₹${t.parkingFee}` : ''})`
+      ).join('\n') + `\n\nGenerated via CoHaven India Fair-Share Engine (UPI Ready)`;
 
     navigator.clipboard.writeText(text);
     setCopied(true);
@@ -120,13 +114,13 @@ export default function RentCalculator({
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-4">
           <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold bg-terracotta/10 text-terracotta dark:bg-terracotta/20">
             <Calculator className="w-3.5 h-3.5" />
-            <span>Fair-Share Living Algorithm</span>
+            <span>Fair-Share Living Algorithm (India)</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-bold tracking-tight text-charcoal dark:text-ivory font-sans">
             Smart Rent & Utility Split Calculator
           </h2>
           <p className="text-sm sm:text-base text-charcoal-300 dark:text-charcoal-100">
-            Eliminate awkward roommate negotiations. We mathematically balance bedroom square footage, private bathrooms, balconies, and communal utilities so everyone pays their exact fair share.
+            Eliminate awkward roommate negotiations in Bengaluru, Mumbai, or Delhi. Mathematically balance bedroom square footage, attached washrooms, private balconies, cook & maid charges so everyone pays their exact fair share.
           </p>
         </div>
 
@@ -137,21 +131,23 @@ export default function RentCalculator({
             {/* Base Numbers Card */}
             <div className="glass-card p-6 rounded-3xl border border-ivory-300 dark:border-charcoal-500 space-y-5">
               <h3 className="text-base font-bold text-charcoal dark:text-ivory flex items-center gap-2">
-                <DollarSign className="w-4 h-4 text-terracotta" />
-                <span>Base Lease Details</span>
+                <span className="font-bold text-terracotta text-lg">₹</span>
+                <span>Base Apartment Rent (INR)</span>
               </h3>
 
               {/* Total Rent Slider */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-xs font-medium">
-                  <span className="text-charcoal-300 dark:text-charcoal-200">Total Monthly Apartment Rent</span>
-                  <span className="text-base font-bold text-charcoal dark:text-ivory font-mono">${totalRent}</span>
+                  <span className="text-charcoal-300 dark:text-charcoal-200">Total Monthly Flat Rent</span>
+                  <span className="text-base font-bold text-charcoal dark:text-ivory font-mono">
+                    ₹{totalRent.toLocaleString('en-IN')}
+                  </span>
                 </div>
                 <input
                   type="range"
-                  min="1500"
-                  max="10000"
-                  step="50"
+                  min="25000"
+                  max="150000"
+                  step="1000"
                   value={totalRent}
                   onChange={(e) => setTotalRent(Number(e.target.value))}
                   className="w-full accent-terracotta cursor-pointer h-2 bg-ivory-300 dark:bg-charcoal-600 rounded-lg"
@@ -161,7 +157,7 @@ export default function RentCalculator({
               {/* Number of Housemates */}
               <div className="space-y-2">
                 <div className="flex items-center justify-between text-xs font-medium">
-                  <span className="text-charcoal-300 dark:text-charcoal-200">Total Housemates Sharing</span>
+                  <span className="text-charcoal-300 dark:text-charcoal-200">Housemates Sharing</span>
                   <span className="text-sm font-bold text-terracotta font-mono">{tenantsCount} Co-Tenants</span>
                 </div>
                 <div className="grid grid-cols-4 gap-2">
@@ -190,7 +186,7 @@ export default function RentCalculator({
                   <span>Communal Utilities Pool</span>
                 </h3>
                 <span className="text-xs font-mono font-bold text-sage">
-                  ${calculations.totalUtilities}/mo total
+                  ₹{calculations.totalUtilities.toLocaleString('en-IN')}/mo total
                 </span>
               </div>
 
@@ -198,58 +194,70 @@ export default function RentCalculator({
                 <div className="p-3 rounded-xl bg-ivory-50 dark:bg-charcoal-600 border border-ivory-300 dark:border-charcoal-500">
                   <div className="flex items-center gap-1.5 text-charcoal-300 dark:text-charcoal-200 mb-1">
                     <Wifi className="w-3.5 h-3.5 text-terracotta" />
-                    <span>Gigabit Fiber</span>
+                    <span>Airtel / Jio Fiber</span>
                   </div>
-                  <input
-                    type="number"
-                    value={wifiCost}
-                    onChange={(e) => setWifiCost(Number(e.target.value))}
-                    className="w-full bg-transparent font-bold text-charcoal dark:text-ivory focus:outline-none font-mono"
-                  />
+                  <div className="flex items-center font-mono font-bold text-charcoal dark:text-ivory">
+                    <span className="text-charcoal-400 mr-1">₹</span>
+                    <input
+                      type="number"
+                      value={wifiCost}
+                      onChange={(e) => setWifiCost(Number(e.target.value))}
+                      className="w-full bg-transparent focus:outline-none"
+                    />
+                  </div>
                 </div>
 
                 <div className="p-3 rounded-xl bg-ivory-50 dark:bg-charcoal-600 border border-ivory-300 dark:border-charcoal-500">
                   <div className="flex items-center gap-1.5 text-charcoal-300 dark:text-charcoal-200 mb-1">
                     <Zap className="w-3.5 h-3.5 text-amber-500" />
-                    <span>Electric & Heat</span>
+                    <span>Electricity & AC</span>
                   </div>
-                  <input
-                    type="number"
-                    value={powerCost}
-                    onChange={(e) => setPowerCost(Number(e.target.value))}
-                    className="w-full bg-transparent font-bold text-charcoal dark:text-ivory focus:outline-none font-mono"
-                  />
+                  <div className="flex items-center font-mono font-bold text-charcoal dark:text-ivory">
+                    <span className="text-charcoal-400 mr-1">₹</span>
+                    <input
+                      type="number"
+                      value={powerCost}
+                      onChange={(e) => setPowerCost(Number(e.target.value))}
+                      className="w-full bg-transparent focus:outline-none"
+                    />
+                  </div>
                 </div>
 
                 <div className="p-3 rounded-xl bg-ivory-50 dark:bg-charcoal-600 border border-ivory-300 dark:border-charcoal-500">
                   <div className="flex items-center gap-1.5 text-charcoal-300 dark:text-charcoal-200 mb-1">
                     <Droplet className="w-3.5 h-3.5 text-blue-500" />
-                    <span>Water & Trash</span>
+                    <span>Maintenance & Water</span>
                   </div>
-                  <input
-                    type="number"
-                    value={waterCost}
-                    onChange={(e) => setWaterCost(Number(e.target.value))}
-                    className="w-full bg-transparent font-bold text-charcoal dark:text-ivory focus:outline-none font-mono"
-                  />
+                  <div className="flex items-center font-mono font-bold text-charcoal dark:text-ivory">
+                    <span className="text-charcoal-400 mr-1">₹</span>
+                    <input
+                      type="number"
+                      value={waterCost}
+                      onChange={(e) => setWaterCost(Number(e.target.value))}
+                      className="w-full bg-transparent focus:outline-none"
+                    />
+                  </div>
                 </div>
 
                 <div className="p-3 rounded-xl bg-ivory-50 dark:bg-charcoal-600 border border-ivory-300 dark:border-charcoal-500">
                   <div className="flex items-center gap-1.5 text-charcoal-300 dark:text-charcoal-200 mb-1">
                     <Brush className="w-3.5 h-3.5 text-emerald-500" />
-                    <span>Deep Clean Svc</span>
+                    <span>Cook & Daily Maid</span>
                   </div>
-                  <input
-                    type="number"
-                    value={cleaningCost}
-                    onChange={(e) => setCleaningCost(Number(e.target.value))}
-                    className="w-full bg-transparent font-bold text-charcoal dark:text-ivory focus:outline-none font-mono"
-                  />
+                  <div className="flex items-center font-mono font-bold text-charcoal dark:text-ivory">
+                    <span className="text-charcoal-400 mr-1">₹</span>
+                    <input
+                      type="number"
+                      value={cleaningCost}
+                      onChange={(e) => setCleaningCost(Number(e.target.value))}
+                      className="w-full bg-transparent focus:outline-none"
+                    />
+                  </div>
                 </div>
               </div>
 
               <div className="text-[11px] text-charcoal-300 dark:text-charcoal-200 bg-ivory-200/50 dark:bg-charcoal-600 p-2.5 rounded-xl">
-                Equal per-person utility share: <span className="font-bold text-charcoal dark:text-ivory font-mono">${calculations.perPersonUtility}/month</span>
+                Equal per-person utility share: <span className="font-bold text-charcoal dark:text-ivory font-mono">₹{calculations.perPersonUtility.toLocaleString('en-IN')}/month</span>
               </div>
             </div>
           </div>
@@ -264,7 +272,7 @@ export default function RentCalculator({
                     Fair-Share Proportional Distribution
                   </h4>
                   <span className="text-xs text-charcoal-300 dark:text-charcoal-200">
-                    Weighted by Sq Ft, Ensuite Baths (+18%), and Private Balconies (+8%)
+                    Weighted by Sq Ft, Attached Bath (+18%), and Private Balcony (+8%)
                   </span>
                 </div>
 
@@ -286,7 +294,7 @@ export default function RentCalculator({
                       key={t.id}
                       style={{ width: `${t.percentOfTotal}%` }}
                       className={`${colors[idx % colors.length]} h-full transition-all duration-500 flex items-center justify-center text-[10px] text-white font-mono font-bold`}
-                      title={`${t.name}: ${t.percentOfTotal}% ($${t.totalDue})`}
+                      title={`${t.name}: ${t.percentOfTotal}% (₹${t.totalDue.toLocaleString('en-IN')})`}
                     >
                       {t.percentOfTotal > 12 && `${t.percentOfTotal}%`}
                     </div>
@@ -302,7 +310,7 @@ export default function RentCalculator({
                     <div key={t.id} className="flex items-center gap-1.5">
                       <span className={`w-2.5 h-2.5 rounded-full ${dotColors[idx % dotColors.length]}`} />
                       <span className="text-charcoal-400 dark:text-charcoal-200 font-medium">
-                        {t.name.split(' ')[0]}: <strong className="text-charcoal dark:text-ivory">${t.totalDue}/mo</strong>
+                        {t.name.split(' ')[0]}: <strong className="text-charcoal dark:text-ivory font-mono">₹{t.totalDue.toLocaleString('en-IN')}/mo</strong>
                       </span>
                     </div>
                   );
@@ -310,7 +318,7 @@ export default function RentCalculator({
               </div>
             </div>
 
-            {/* Individual Room Cards */}
+            {/* Individual Room Cards in INR */}
             <div className="space-y-3">
               {calculations.breakdown.map((tenant, idx) => (
                 <div
@@ -354,7 +362,7 @@ export default function RentCalculator({
                         }`}
                       >
                         <Bath className="w-3 h-3" />
-                        <span>En-Suite Bath (+18%)</span>
+                        <span>Attached Bath (+18%)</span>
                       </button>
 
                       <button
@@ -378,21 +386,21 @@ export default function RentCalculator({
                         }`}
                       >
                         <Car className="w-3 h-3" />
-                        <span>Parking (+$120)</span>
+                        <span>Parking (+₹1,500)</span>
                       </button>
                     </div>
                   </div>
 
-                  {/* Right: Price output */}
+                  {/* Right: Price output in INR */}
                   <div className="text-right sm:border-l sm:border-ivory-300 sm:dark:border-charcoal-500 sm:pl-6 shrink-0">
                     <div className="text-2xl font-bold text-charcoal dark:text-ivory font-mono">
-                      ${tenant.totalDue}
+                      ₹{tenant.totalDue.toLocaleString('en-IN')}
                       <span className="text-xs font-normal text-charcoal-300 dark:text-charcoal-200">/mo</span>
                     </div>
                     <div className="text-[11px] text-charcoal-300 dark:text-charcoal-200 space-y-0.5 mt-1 font-mono">
-                      <div>Rent: ${tenant.rentShare}</div>
-                      <div>Utilities: ${tenant.utilityShare}</div>
-                      {tenant.parkingFee > 0 && <div>Parking: ${tenant.parkingFee}</div>}
+                      <div>Rent: ₹{tenant.rentShare.toLocaleString('en-IN')}</div>
+                      <div>Utilities: ₹{tenant.utilityShare.toLocaleString('en-IN')}</div>
+                      {tenant.parkingFee > 0 && <div>Parking: ₹{tenant.parkingFee.toLocaleString('en-IN')}</div>}
                     </div>
                   </div>
                 </div>

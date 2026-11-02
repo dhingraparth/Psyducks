@@ -14,6 +14,8 @@ import {
   CheckCircle2,
   SlidersHorizontal
 } from 'lucide-react';
+import SmartImage from './SmartImage';
+import { SVG_LIVING_COMMONS, SVG_AVATAR_ANANYA } from '../utils/svgImages';
 import { soundEngine } from '../utils/audio';
 
 export default function HeroSection({
@@ -26,7 +28,7 @@ export default function HeroSection({
 }) {
   const [selectedCity, setSelectedCity] = useState('All Cities');
   const [selectedRoomType, setSelectedRoomType] = useState('All Types');
-  const [budget, setBudget] = useState(2000);
+  const [budget, setBudget] = useState(35000);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
@@ -45,11 +47,11 @@ export default function HeroSection({
         <div className="flex items-center gap-2 mb-6">
           <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold bg-terracotta/10 text-terracotta border border-terracotta/20 dark:bg-terracotta/20 dark:text-terracotta-light">
             <Sparkles className="w-3.5 h-3.5" />
-            <span>Curated Shared Living Collective</span>
+            <span>Curated Shared Living in India</span>
           </span>
           <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium text-charcoal-300 dark:text-charcoal-200">
             <ShieldCheck className="w-3.5 h-3.5 text-sage" />
-            <span>100% Identity & Acoustic Verified</span>
+            <span>100% Aadhaar & Background Verified</span>
           </span>
         </div>
 
@@ -63,7 +65,7 @@ export default function HeroSection({
             </h1>
 
             <p className="text-base sm:text-lg text-charcoal-300 dark:text-charcoal-100 max-w-2xl font-normal leading-relaxed">
-              More than a place to stay. Find a home that fits your lifestyle, your rhythm, and your people. Scandinavian warmth meets algorithmic flatmate compatibility.
+              More than a rented flat. Find a home in Bengaluru, Mumbai, or Delhi that fits your lifestyle, your rhythm, and your housemates. Scandinavian aesthetics meet verified roommate compatibility.
             </p>
 
             {/* Hero CTAs */}
@@ -109,7 +111,7 @@ export default function HeroSection({
                   2,480<span className="text-terracotta">+</span>
                 </div>
                 <div className="text-xs text-charcoal-300 dark:text-charcoal-200 mt-0.5">
-                  Verified Spaces
+                  Verified Rooms in India
                 </div>
               </div>
               <div>
@@ -117,60 +119,60 @@ export default function HeroSection({
                   98.4<span className="text-sage">%</span>
                 </div>
                 <div className="text-xs text-charcoal-300 dark:text-charcoal-200 mt-0.5">
-                  Match Harmony
+                  Roommate Harmony
                 </div>
               </div>
               <div>
                 <div className="text-2xl sm:text-3xl font-bold text-charcoal dark:text-ivory font-sans">
-                  14
+                  6
                 </div>
                 <div className="text-xs text-charcoal-300 dark:text-charcoal-200 mt-0.5">
-                  Design Capitals
+                  Prime Indian Cities
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Clean Layered Editorial Composition */}
+          {/* Right Column: Clean Layered Editorial Composition with Guaranteed Visual */}
           <div className="lg:col-span-5 relative">
             <div className="relative mx-auto max-w-md lg:max-w-none">
-              {/* Main Architectural Visual */}
+              {/* Main Architectural Visual (Guaranteed SVG Rendering - NEVER BLACK) */}
               <div 
                 onClick={() => {
                   soundEngine.playClick();
                   if (featuredProperty) onSelectProperty(featuredProperty);
                 }}
-                className="relative rounded-3xl overflow-hidden shadow-soft-xl border border-ivory-300 dark:border-charcoal-500 group cursor-pointer bg-charcoal-600"
+                className="relative rounded-3xl overflow-hidden shadow-soft-xl border border-ivory-300 dark:border-charcoal-500 group cursor-pointer bg-ivory-200 dark:bg-charcoal-600"
               >
-                <img
-                  src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85"
-                  alt="CoHaven Scandinavian Interior"
-                  className="w-full h-[440px] sm:h-[480px] object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                <SmartImage
+                  src={SVG_LIVING_COMMONS}
+                  alt="CoHaven Scandinavian Interior Indiranagar"
+                  className="w-full h-[440px] sm:h-[480px] group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
                 
                 {/* Gradient vignette */}
                 <div className="absolute inset-0 bg-gradient-to-t from-charcoal/85 via-charcoal/20 to-transparent" />
 
                 {/* Overlaid Property Info */}
-                <div className="absolute bottom-6 left-6 right-6 text-white space-y-1.5">
+                <div className="absolute bottom-6 left-6 right-6 text-white space-y-1.5 z-10">
                   <div className="flex items-center gap-2">
                     <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-terracotta text-white uppercase tracking-wider">
                       Featured Sanctuary
                     </span>
                     <span className="px-2.5 py-0.5 rounded-full text-[10px] font-medium bg-black/40 backdrop-blur-md text-ivory border border-white/20">
-                      Brooklyn, NY
+                      Indiranagar, Bengaluru
                     </span>
                   </div>
                   <h3 className="text-xl font-bold font-sans">The Kanso Nordic Atelier</h3>
                   <div className="flex items-center justify-between text-xs text-ivory-200 pt-1">
-                    <span>From $1,450/month • All utilities inc.</span>
+                    <span>From ₹24,500/month • All utilities inc.</span>
                     <span className="text-terracotta-light font-semibold">View Details →</span>
                   </div>
                 </div>
               </div>
 
               {/* Floating Badge 1: Compatibility Score */}
-              <div className="absolute -top-4 -right-4 sm:-right-6 glass-card p-3 rounded-2xl shadow-soft-lg flex items-center gap-3">
+              <div className="absolute -top-4 -right-4 sm:-right-6 glass-card p-3 rounded-2xl shadow-soft-lg flex items-center gap-3 z-20">
                 <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-bold text-sm">
                   98%
                 </div>
@@ -181,27 +183,28 @@ export default function HeroSection({
               </div>
 
               {/* Floating Badge 2: Verified Flatmate */}
-              <div className="absolute -bottom-5 -left-4 sm:-left-6 glass-card p-3 rounded-2xl shadow-soft-lg flex items-center gap-3">
+              <div className="absolute -bottom-5 -left-4 sm:-left-6 glass-card p-3 rounded-2xl shadow-soft-lg flex items-center gap-3 z-20">
                 <div className="relative w-11 h-11 rounded-full overflow-hidden ring-2 ring-terracotta">
-                  <img
-                    src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80"
-                    alt="Astrid flatmate"
+                  <SmartImage
+                    src={SVG_AVATAR_ANANYA}
+                    alt="Ananya flatmate"
+                    isAvatar={true}
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div>
                   <div className="flex items-center gap-1.5">
-                    <span className="text-xs font-bold text-charcoal dark:text-ivory">Astrid L.</span>
-                    <CheckCircle2 className="w-3 h-3 text-sage fill-sage/20" />
+                    <span className="text-xs font-bold text-charcoal dark:text-ivory">Ananya D.</span>
+                    <CheckCircle2 className="w-3.5 h-3.5 text-sage fill-sage/20" />
                   </div>
-                  <div className="text-[10px] text-charcoal-300 dark:text-charcoal-200">Spatial UX • Early Riser</div>
+                  <div className="text-[10px] text-charcoal-300 dark:text-charcoal-200">Spatial UX Lead • Bengaluru</div>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        {/* Integrated Clean Search Filter Bar */}
+        {/* Integrated Clean Search Filter Bar (Indian Cities & INR) */}
         <div className="mt-14 max-w-5xl mx-auto">
           <form
             onSubmit={handleSearchSubmit}
@@ -218,13 +221,12 @@ export default function HeroSection({
                 onChange={(e) => setSelectedCity(e.target.value)}
                 className="w-full bg-transparent text-xs sm:text-sm font-semibold text-charcoal dark:text-ivory focus:outline-none cursor-pointer"
               >
-                <option value="All Cities" className="dark:bg-charcoal-700">All Global Cities</option>
-                <option value="Brooklyn, New York" className="dark:bg-charcoal-700">New York (Brooklyn)</option>
-                <option value="Berlin, Germany" className="dark:bg-charcoal-700">Berlin (Kreuzberg)</option>
-                <option value="London, United Kingdom" className="dark:bg-charcoal-700">London (Shoreditch)</option>
-                <option value="Stockholm, Sweden" className="dark:bg-charcoal-700">Stockholm (Södermalm)</option>
-                <option value="San Francisco, California" className="dark:bg-charcoal-700">San Francisco (Pacific Heights)</option>
-                <option value="Amsterdam, Netherlands" className="dark:bg-charcoal-700">Amsterdam (Jordaan)</option>
+                <option value="All Cities" className="dark:bg-charcoal-700">All Indian Hubs</option>
+                <option value="Bengaluru, Karnataka" className="dark:bg-charcoal-700">Bengaluru (Indiranagar / Koramangala)</option>
+                <option value="Mumbai, Maharashtra" className="dark:bg-charcoal-700">Mumbai (Bandra West / Powai)</option>
+                <option value="New Delhi, Delhi NCR" className="dark:bg-charcoal-700">New Delhi (Hauz Khas / Gurgaon)</option>
+                <option value="Hyderabad, Telangana" className="dark:bg-charcoal-700">Hyderabad (Jubilee Hills / Gachibowli)</option>
+                <option value="Pune, Maharashtra" className="dark:bg-charcoal-700">Pune (Koregaon Park / Viman Nagar)</option>
               </select>
             </div>
 
@@ -240,25 +242,25 @@ export default function HeroSection({
                 className="w-full bg-transparent text-xs sm:text-sm font-semibold text-charcoal dark:text-ivory focus:outline-none cursor-pointer"
               >
                 <option value="All Types" className="dark:bg-charcoal-700">All Room Types</option>
-                <option value="Private Room" className="dark:bg-charcoal-700">Private Room</option>
-                <option value="Master Suite" className="dark:bg-charcoal-700">Master Suite (En-Suite Bath)</option>
+                <option value="Private Room" className="dark:bg-charcoal-700">Private Bedroom (Shared Bath)</option>
+                <option value="Master Suite" className="dark:bg-charcoal-700">Master Suite (Attached En-Suite Bath)</option>
               </select>
             </div>
 
-            {/* Budget Slider */}
+            {/* Budget Slider in INR */}
             <div className="space-y-1 lg:border-l lg:border-ivory-300 lg:dark:border-charcoal-500 lg:pl-4">
               <div className="flex items-center justify-between">
                 <label className="text-[11px] font-semibold tracking-wider uppercase text-charcoal-300 dark:text-charcoal-200 flex items-center gap-1.5">
-                  <DollarSign className="w-3.5 h-3.5 text-terracotta" />
+                  <span className="font-bold text-terracotta">₹</span>
                   <span>Max Monthly Budget</span>
                 </label>
-                <span className="text-xs font-bold text-terracotta font-mono">${budget}</span>
+                <span className="text-xs font-bold text-terracotta font-mono">₹{budget.toLocaleString('en-IN')}</span>
               </div>
               <input
                 type="range"
-                min="800"
-                max="2500"
-                step="50"
+                min="12000"
+                max="50000"
+                step="1000"
                 value={budget}
                 onChange={(e) => setBudget(Number(e.target.value))}
                 className="w-full accent-terracotta cursor-pointer h-1.5 bg-ivory-300 dark:bg-charcoal-500 rounded-lg"

@@ -7,9 +7,9 @@ import {
   ShieldCheck, 
   MapPin, 
   Users, 
-  LayoutGrid, 
-  ArrowUpRight 
+  LayoutGrid 
 } from 'lucide-react';
+import SmartImage from './SmartImage';
 import { soundEngine } from '../utils/audio';
 
 export default function PropertyCard({
@@ -46,28 +46,28 @@ export default function PropertyCard({
       }}
       className="group relative rounded-3xl overflow-hidden glass-card hover:shadow-soft-xl transition-all duration-300 border border-ivory-300 dark:border-charcoal-500 cursor-pointer flex flex-col h-full bg-white dark:bg-charcoal-700"
     >
-      {/* Image Carousel Container */}
-      <div className="relative aspect-[4/3] w-full overflow-hidden bg-charcoal-700">
-        <img
+      {/* Image Carousel Container - Warm subtle background, NEVER pitch black */}
+      <div className="relative aspect-[4/3] w-full overflow-hidden bg-ivory-200 dark:bg-charcoal-600">
+        <SmartImage
           src={property.images[currentImageIndex]}
           alt={property.title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+          className="w-full h-full group-hover:scale-105 transition-transform duration-700 ease-out"
         />
 
         {/* Carousel Navigation Arrows */}
         {property.images.length > 1 && (
-          <div className="absolute inset-x-2 top-1/2 -translate-y-1/2 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <div className="absolute inset-x-2 top-1/2 -translate-y-1/2 flex items-center justify-between opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
             <button
               onClick={prevImage}
               className="p-1.5 rounded-full bg-charcoal/70 text-white hover:bg-charcoal transition-all backdrop-blur-md"
-              title="Previous image"
+              title="Previous photo"
             >
               <ChevronLeft className="w-4 h-4" />
             </button>
             <button
               onClick={nextImage}
               className="p-1.5 rounded-full bg-charcoal/70 text-white hover:bg-charcoal transition-all backdrop-blur-md"
-              title="Next image"
+              title="Next photo"
             >
               <ChevronRight className="w-4 h-4" />
             </button>
@@ -81,7 +81,7 @@ export default function PropertyCard({
               <span
                 key={idx}
                 className={`w-1.5 h-1.5 rounded-full transition-all ${
-                  idx === currentImageIndex ? 'bg-white w-4' : 'bg-white/50'
+                  idx === currentImageIndex ? 'bg-white w-4' : 'bg-white/60'
                 }`}
               />
             ))}
@@ -106,7 +106,7 @@ export default function PropertyCard({
                   onOpenFloorPlan();
                 }}
                 className="p-2 rounded-full glass-pill text-charcoal hover:text-amber-600 dark:text-ivory transition-transform hover:scale-105"
-                title="Inspect Floor Plan Layout"
+                title="Inspect Room Floor Plan"
               >
                 <LayoutGrid className="w-3.5 h-3.5 text-amber-600" />
               </button>
@@ -127,8 +127,8 @@ export default function PropertyCard({
         </div>
 
         {/* Room Type Tag */}
-        <div className="absolute bottom-3 left-3">
-          <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-black/50 backdrop-blur-md text-white border border-white/20 uppercase tracking-wider font-mono">
+        <div className="absolute bottom-3 left-3 z-10">
+          <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-black/60 backdrop-blur-md text-white border border-white/20 uppercase tracking-wider font-mono">
             {property.roomType} • {property.sqft} sq ft
           </span>
         </div>
@@ -162,30 +162,35 @@ export default function PropertyCard({
           </div>
         </div>
 
-        {/* Flatmate Avatars & Pricing Breakdown */}
+        {/* Flatmate Avatars & Pricing Breakdown in INR */}
         <div className="pt-3 border-t border-ivory-200 dark:border-charcoal-500/50 flex items-center justify-between">
           {/* Flatmates */}
           <div className="flex items-center">
             <div className="flex -space-x-2 overflow-hidden">
               {property.flatmates.map((fm) => (
-                <img
+                <div
                   key={fm.id}
-                  src={fm.avatar}
-                  alt={fm.name}
+                  className="inline-block w-7 h-7 rounded-full ring-2 ring-ivory dark:ring-charcoal-600 overflow-hidden"
                   title={`${fm.name} (${fm.role})`}
-                  className="inline-block w-7 h-7 rounded-full ring-2 ring-ivory dark:ring-charcoal-600 object-cover"
-                />
+                >
+                  <SmartImage
+                    src={fm.avatar}
+                    alt={fm.name}
+                    isAvatar={true}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               ))}
             </div>
-            <span className="text-[11px] text-charcoal-300 dark:text-charcoal-200 ml-2">
+            <span className="text-[11px] text-charcoal-300 dark:text-charcoal-200 ml-2 font-medium">
               {property.occupiedTenants}/{property.totalTenants} living
             </span>
           </div>
 
-          {/* Price */}
+          {/* Price in INR */}
           <div className="text-right">
             <div className="text-base font-bold text-charcoal dark:text-ivory font-mono">
-              ${property.pricePerMonth}
+              ₹{property.pricePerMonth.toLocaleString('en-IN')}
               <span className="text-xs font-normal text-charcoal-300 dark:text-charcoal-200">/mo</span>
             </div>
             <div className="text-[10px] text-sage font-medium">All utilities inc.</div>

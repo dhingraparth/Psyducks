@@ -22,26 +22,54 @@ import {
 } from './data/mockData';
 import { soundEngine } from './utils/audio';
 
+const DATA_VERSION = '2.2-inr';
+
 export default function App() {
-  // 1. Core State with LocalStorage Persistence
+  // 1. Core State with LocalStorage Persistence and Migration to INR
   const [properties, setProperties] = useState(() => {
-    const saved = localStorage.getItem('cohaven_properties');
-    return saved ? JSON.parse(saved) : INITIAL_PROPERTIES;
+    try {
+      const v = localStorage.getItem('cohaven_version');
+      if (v !== DATA_VERSION) {
+        localStorage.setItem('cohaven_version', DATA_VERSION);
+        localStorage.setItem('cohaven_properties', JSON.stringify(INITIAL_PROPERTIES));
+        localStorage.setItem('cohaven_applications', JSON.stringify(INITIAL_APPLICATIONS));
+        localStorage.setItem('cohaven_messages', JSON.stringify(INITIAL_MESSAGES));
+        return INITIAL_PROPERTIES;
+      }
+      const saved = localStorage.getItem('cohaven_properties');
+      return saved ? JSON.parse(saved) : INITIAL_PROPERTIES;
+    } catch (e) {
+      return INITIAL_PROPERTIES;
+    }
   });
 
   const [favorites, setFavorites] = useState(() => {
-    const saved = localStorage.getItem('cohaven_favorites');
-    return saved ? JSON.parse(saved) : ['coh-01', 'coh-04'];
+    try {
+      const saved = localStorage.getItem('cohaven_favorites');
+      return saved ? JSON.parse(saved) : ['coh-01', 'coh-04'];
+    } catch (e) {
+      return ['coh-01', 'coh-04'];
+    }
   });
 
   const [applications, setApplications] = useState(() => {
-    const saved = localStorage.getItem('cohaven_applications');
-    return saved ? JSON.parse(saved) : INITIAL_APPLICATIONS;
+    try {
+      if (localStorage.getItem('cohaven_version') !== DATA_VERSION) return INITIAL_APPLICATIONS;
+      const saved = localStorage.getItem('cohaven_applications');
+      return saved ? JSON.parse(saved) : INITIAL_APPLICATIONS;
+    } catch (e) {
+      return INITIAL_APPLICATIONS;
+    }
   });
 
   const [messages, setMessages] = useState(() => {
-    const saved = localStorage.getItem('cohaven_messages');
-    return saved ? JSON.parse(saved) : INITIAL_MESSAGES;
+    try {
+      if (localStorage.getItem('cohaven_version') !== DATA_VERSION) return INITIAL_MESSAGES;
+      const saved = localStorage.getItem('cohaven_messages');
+      return saved ? JSON.parse(saved) : INITIAL_MESSAGES;
+    } catch (e) {
+      return INITIAL_MESSAGES;
+    }
   });
 
   const [user, setUser] = useState(INITIAL_USER);

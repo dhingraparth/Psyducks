@@ -16,6 +16,8 @@ import {
   BookOpen, 
   UserCheck 
 } from 'lucide-react';
+import SmartImage from './SmartImage';
+import { SVG_AVATAR_AARAV } from '../utils/svgImages';
 import { soundEngine } from '../utils/audio';
 
 export default function Navigation({
@@ -200,7 +202,7 @@ export default function Navigation({
                 )}
               </button>
 
-              {/* User Dashboard / Profile */}
+              {/* User Dashboard / Profile with SmartImage */}
               <button
                 onClick={() => {
                   soundEngine.playClick();
@@ -209,13 +211,14 @@ export default function Navigation({
                 className="flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-full border border-ivory-300 dark:border-charcoal-500 hover:border-charcoal transition-all bg-ivory-50 dark:bg-charcoal-600 group"
               >
                 <div className="w-6 h-6 rounded-full overflow-hidden ring-1 ring-terracotta/40">
-                  <img
-                    src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=100&q=80"
-                    alt="User Avatar"
+                  <SmartImage
+                    src={SVG_AVATAR_AARAV}
+                    alt="Aarav Sharma Avatar"
+                    isAvatar={true}
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <span className="text-xs font-semibold text-charcoal dark:text-ivory">Alex</span>
+                <span className="text-xs font-semibold text-charcoal dark:text-ivory">Aarav</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
               </button>
 

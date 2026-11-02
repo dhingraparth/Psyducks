@@ -14,6 +14,7 @@ import {
   Eye, 
   ShieldCheck 
 } from 'lucide-react';
+import SmartImage from './SmartImage';
 import { soundEngine } from '../utils/audio';
 
 export default function InteractiveFloorPlan({
@@ -21,17 +22,11 @@ export default function InteractiveFloorPlan({
   onBookRoom,
   onSelectProperty
 }) {
-  const rooms = property?.rooms || [
-    { id: "r1", name: "Living Commons & Dining", sqft: 380, status: "Shared", occupant: "All Flatmates", photo: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80", acoustic: "24 dB", daylight: "South Facing (All Day)" },
-    { id: "r2", name: "Chef's Kitchen & Island", sqft: 190, status: "Shared", occupant: "All Flatmates", photo: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80", acoustic: "28 dB", daylight: "East Facing (Morning Sun)" },
-    { id: "r3", name: "Private Bedroom 01", sqft: 240, status: "Occupied", occupant: "Astrid (UX Director)", photo: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80", acoustic: "22 dB", daylight: "South-West Facing" },
-    { id: "r4", name: "Available Suite 02", sqft: 220, status: "Vacant", occupant: "Available for You ($1,450/mo)", photo: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80", acoustic: "20 dB (Acoustic Foam)", daylight: "South Facing + Balcony" }
-  ];
+  const rooms = property?.rooms || [];
+  const [selectedRoomId, setSelectedRoomId] = useState(rooms[rooms.length - 1]?.id || "r4");
+  const [daylightFilter, setDaylightFilter] = useState("golden");
 
-  const [selectedRoomId, setSelectedRoomId] = useState("r4");
-  const [daylightFilter, setDaylightFilter] = useState("golden"); // 'morning', 'golden', 'evening'
-
-  const selectedRoom = rooms.find(r => r.id === selectedRoomId) || rooms[0];
+  const selectedRoom = rooms.find(r => r.id === selectedRoomId) || rooms[0] || {};
 
   const handleRoomClick = (roomId) => {
     soundEngine.playClick();
@@ -48,10 +43,10 @@ export default function InteractiveFloorPlan({
             <span>Architectural Layout Navigator</span>
           </div>
           <h3 className="text-xl sm:text-2xl font-bold text-charcoal dark:text-ivory font-sans">
-            Interactive Floor Plan & Acoustic Zones
+            Interactive Floor Plan & Acoustic Zones (India)
           </h3>
           <p className="text-xs sm:text-sm text-charcoal-300 dark:text-charcoal-200 mt-0.5">
-            Select any room to inspect natural daylight angles, acoustic isolation (dB), and current occupant allocation.
+            Select any room to inspect natural daylight angles, acoustic isolation (dB), and current roommate allocation.
           </p>
         </div>
 
@@ -106,9 +101,8 @@ export default function InteractiveFloorPlan({
 
       {/* Main Floor Plan Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start pt-6">
-        {/* Left Interactive SVG Floor Map */}
+        {/* Left Interactive Blueprint Blocks */}
         <div className="lg:col-span-7 bg-ivory-100 dark:bg-charcoal-700/60 rounded-2xl p-5 border border-ivory-300 dark:border-charcoal-600 relative overflow-hidden">
-          {/* Ambient Lighting Overlay according to Daylight mode */}
           <div 
             className={`absolute inset-0 pointer-events-none transition-all duration-700 ${
               daylightFilter === 'morning' ? 'bg-amber-200/10' :
@@ -116,7 +110,6 @@ export default function InteractiveFloorPlan({
             }`} 
           />
 
-          {/* Interactive Room Grid / Blueprint Blocks */}
           <div className="grid grid-cols-2 gap-3.5 relative z-10">
             {rooms.map((room) => {
               const isSelected = room.id === selectedRoomId;
@@ -131,10 +124,9 @@ export default function InteractiveFloorPlan({
                   className={`p-4 rounded-2xl cursor-pointer border-2 transition-all relative overflow-hidden flex flex-col justify-between min-h-[140px] sm:min-h-[160px] ${
                     isSelected
                       ? "border-terracotta bg-white dark:bg-charcoal-600 shadow-soft-md ring-2 ring-terracotta/20"
-                      : "border-ivory-300 dark:border-charcoal-500 bg-white/70 dark:bg-charcoal-600/70 hover:border-charcoal-300"
+                      : "border-ivory-300 dark:border-charcoal-500 bg-white/80 dark:bg-charcoal-600/80 hover:border-charcoal-300"
                   }`}
                 >
-                  {/* Top Badge */}
                   <div className="flex items-center justify-between">
                     <span className={`text-[10px] font-mono uppercase tracking-wider font-bold px-2 py-0.5 rounded-full ${
                       isVacant
@@ -149,7 +141,6 @@ export default function InteractiveFloorPlan({
                     </span>
                   </div>
 
-                  {/* Room Name & Acoustic Rating */}
                   <div className="my-2">
                     <h4 className="font-bold text-sm text-charcoal dark:text-ivory font-sans">
                       {room.name}
@@ -159,13 +150,11 @@ export default function InteractiveFloorPlan({
                     </p>
                   </div>
 
-                  {/* Acoustic & Daylight Tags */}
                   <div className="flex items-center justify-between text-[10px] font-mono pt-2 border-t border-ivory-200 dark:border-charcoal-500">
                     <span className="text-sage font-semibold">Sound: {room.acoustic}</span>
                     <span className="text-terracotta">{room.daylight.split(' ')[0]}</span>
                   </div>
 
-                  {/* Vacant Highlight Corner Tag */}
                   {isVacant && (
                     <div className="absolute top-0 right-0 w-3 h-3 bg-terracotta" />
                   )}
@@ -174,32 +163,31 @@ export default function InteractiveFloorPlan({
             })}
           </div>
 
-          {/* Blueprint Legend */}
           <div className="mt-4 pt-3 border-t border-ivory-200 dark:border-charcoal-600 flex flex-wrap items-center justify-between text-xs text-charcoal-300 dark:text-charcoal-200 font-mono">
-            <span>● Click any suite to view photography & acoustic isolation</span>
-            <span className="text-emerald-600 dark:text-emerald-400 font-bold">Suite 02 is Available</span>
+            <span>● Click any room to view photography & acoustic isolation</span>
+            <span className="text-emerald-600 dark:text-emerald-400 font-bold">Suite 02 is Available in Indiranagar</span>
           </div>
         </div>
 
-        {/* Right Selected Room Detail Card */}
+        {/* Right Selected Room Detail Card with SmartImage */}
         <div className="lg:col-span-5 space-y-4">
           <AnimatePresence mode="wait">
             <motion.div
-              key={selectedRoom.id}
+              key={selectedRoom.id || 'room-detail'}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
               transition={{ duration: 0.2 }}
               className="space-y-4"
             >
-              {/* Photo Preview */}
-              <div className="relative aspect-[16/10] rounded-2xl overflow-hidden shadow-soft-sm border border-ivory-300 dark:border-charcoal-500 group">
-                <img
+              {/* Photo Preview (SmartImage guaranteed visible) */}
+              <div className="relative aspect-[16/10] rounded-2xl overflow-hidden shadow-soft-sm border border-ivory-300 dark:border-charcoal-500 group bg-ivory-200 dark:bg-charcoal-600">
+                <SmartImage
                   src={selectedRoom.photo}
                   alt={selectedRoom.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full text-[10px] font-mono text-white">
+                <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full text-[10px] font-mono text-white z-10">
                   {selectedRoom.status === 'Vacant' ? 'Available for Move-in' : 'Shared Common Space'}
                 </div>
               </div>

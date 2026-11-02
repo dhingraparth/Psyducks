@@ -7,7 +7,6 @@ import {
   MapPin, 
   Sparkles, 
   CheckCircle2, 
-  Box, 
   User, 
   Mail, 
   Phone, 
@@ -17,8 +16,8 @@ import {
   ArrowLeft,
   ShieldCheck
 } from 'lucide-react';
+import SmartImage from './SmartImage';
 import { soundEngine } from '../utils/audio';
-import SafeImage from './SafeImage';
 
 export default function BookingModal({
   isOpen,
@@ -28,18 +27,18 @@ export default function BookingModal({
   onOpenMessages
 }) {
   const [step, setStep] = useState(1);
-  const [tourType, setTourType] = useState('3d_virtual'); // '3d_virtual', 'in_person'
+  const [tourType, setTourType] = useState('video_walkthrough');
   const [selectedDate, setSelectedDate] = useState('2026-11-12');
   const [selectedTime, setSelectedTime] = useState('14:30');
-  const [leaseTerm, setLeaseTerm] = useState('12_months');
+  const [leaseTerm, setLeaseTerm] = useState('11_months');
 
   const [applicant, setApplicant] = useState({
-    name: "Alexander Kim",
-    email: "alexander.kim@designstudio.io",
-    phone: "+1 (555) 234-8901",
+    name: "Aarav Sharma",
+    email: "aarav.sharma@designstudio.in",
+    phone: "+91 98765 43210",
     occupation: "Senior Product Designer",
     moveInDate: "2026-12-01",
-    bio: "Hi Astrid and team! I'm an early riser who loves clean countertops, quiet evening reading, and respectful shared living. Really loved your space layout."
+    bio: "Hi Ananya and housemates! I'm an early riser working in product design. I love clean kitchen counters, quiet weekday reading, and respectful shared living. Really loved your space layout."
   });
 
   if (!isOpen || !property) return null;
@@ -48,7 +47,6 @@ export default function BookingModal({
     e.preventDefault();
     soundEngine.playSuccess();
 
-    // Trigger celebratory confetti
     try {
       confetti({
         particleCount: 100,
@@ -60,10 +58,11 @@ export default function BookingModal({
       // Fallback
     }
 
-    setStep(4); // Move to Confirmation screen
+    setStep(4);
 
     if (onBookingComplete) {
       onBookingComplete({
+        id: `APP-${Math.floor(1000 + Math.random() * 9000)}`,
         propertyId: property.id,
         propertyTitle: property.title,
         location: `${property.neighborhood}, ${property.city}`,
@@ -71,9 +70,10 @@ export default function BookingModal({
         monthlyRent: property.pricePerMonth,
         appliedDate: new Date().toISOString().split('T')[0],
         tourDate: `${selectedDate} at ${selectedTime}`,
-        tourType: tourType === '3d_virtual' ? '3D Spatial Virtual Tour' : 'In-Person Walkthrough',
+        tourType: tourType === 'video_walkthrough' ? 'Guided Video Walkthrough' : 'In-Person Walkthrough',
         status: 'Viewing Confirmed',
-        statusColor: 'sage',
+        statusBadge: 'Confirmed',
+        statusColor: 'emerald',
         primaryFlatmate: property.flatmates[0]?.name || "Lead Resident",
         flatmateAvatar: property.flatmates[0]?.avatar || ""
       });
@@ -86,18 +86,20 @@ export default function BookingModal({
         {/* Top Header */}
         <div className="flex items-center justify-between pb-5 border-b border-ivory-300 dark:border-charcoal-400">
           <div className="flex items-center gap-3">
-            <SafeImage
-              src={property.images[0]}
-              alt={property.title}
-              className="w-12 h-12 rounded-xl object-cover"
-            />
+            <div className="w-12 h-12 rounded-xl overflow-hidden bg-ivory-200 dark:bg-charcoal-600 shrink-0">
+              <SmartImage
+                src={property.images[0]}
+                alt={property.title}
+                className="w-full h-full object-cover"
+              />
+            </div>
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-[10px] font-mono uppercase tracking-wider font-bold text-terracotta">
                   Viewing & Application
                 </span>
                 <span className="text-xs text-charcoal-300 dark:text-charcoal-200">•</span>
-                <span className="text-xs font-bold text-charcoal dark:text-ivory">${property.pricePerMonth}/mo</span>
+                <span className="text-xs font-bold text-charcoal dark:text-ivory">₹{property.pricePerMonth.toLocaleString('en-IN')}/mo</span>
               </div>
               <h3 className="font-bold text-sm text-charcoal dark:text-ivory truncate max-w-xs sm:max-w-md">
                 {property.title}
@@ -141,7 +143,7 @@ export default function BookingModal({
                 Choose Your Preferred Viewing Experience
               </h4>
               <p className="text-xs text-charcoal-300 dark:text-charcoal-100 mt-1">
-                Meet current housemates and experience the natural light and acoustic atmosphere.
+                Meet current housemates in {property.neighborhood} and inspect acoustic tranquility.
               </p>
             </div>
 
@@ -151,23 +153,23 @@ export default function BookingModal({
                 type="button"
                 onClick={() => {
                   soundEngine.playClick();
-                  setTourType('3d_virtual');
+                  setTourType('video_walkthrough');
                 }}
                 className={`p-4 rounded-2xl text-left border transition-all ${
-                  tourType === '3d_virtual'
+                  tourType === 'video_walkthrough'
                     ? 'bg-terracotta/10 border-terracotta shadow-sm ring-1 ring-terracotta'
                     : 'bg-ivory-50 dark:bg-charcoal-600 border-ivory-300 dark:border-charcoal-500'
                 }`}
               >
                 <div className="flex items-center justify-between mb-2">
-                  <Box className="w-5 h-5 text-terracotta" />
+                  <Clock className="w-5 h-5 text-terracotta" />
                   <span className="text-[10px] font-mono bg-terracotta text-white px-2 py-0.5 rounded-full font-bold">
                     RECOMMENDED
                   </span>
                 </div>
-                <h5 className="font-bold text-sm text-charcoal dark:text-ivory">3D Spatial Virtual Tour</h5>
+                <h5 className="font-bold text-sm text-charcoal dark:text-ivory">Live Video Walkthrough</h5>
                 <p className="text-xs text-charcoal-300 dark:text-charcoal-200 mt-1">
-                  Guided live video walkthrough via WebGL room simulation + 15 min chat with Astrid.
+                  15-minute Google Meet walkthrough with Ananya & housemates.
                 </p>
               </button>
 
@@ -186,9 +188,9 @@ export default function BookingModal({
                 <div className="flex items-center justify-between mb-2">
                   <MapPin className="w-5 h-5 text-sage" />
                 </div>
-                <h5 className="font-bold text-sm text-charcoal dark:text-ivory">In-Person Walkthrough</h5>
+                <h5 className="font-bold text-sm text-charcoal dark:text-ivory">In-Person Visit</h5>
                 <p className="text-xs text-charcoal-300 dark:text-charcoal-200 mt-1">
-                  Physical visit at {property.neighborhood}, inspect acoustics & meet housemates over tea.
+                  Physical visit at {property.neighborhood}, meet housemates over tea.
                 </p>
               </button>
             </div>
@@ -211,18 +213,18 @@ export default function BookingModal({
               <div className="space-y-1.5">
                 <label className="text-xs font-semibold text-charcoal-400 dark:text-charcoal-200 flex items-center gap-1.5">
                   <Clock className="w-3.5 h-3.5 text-sage" />
-                  <span>Time Slot (Your Local Time)</span>
+                  <span>Time Slot (IST)</span>
                 </label>
                 <select
                   value={selectedTime}
                   onChange={(e) => setSelectedTime(e.target.value)}
                   className="w-full text-xs font-medium p-3 rounded-xl border border-ivory-300 dark:border-charcoal-500 bg-white dark:bg-charcoal-600 text-charcoal dark:text-ivory focus:outline-none cursor-pointer"
                 >
-                  <option value="10:00">10:00 AM (Morning Coffee)</option>
-                  <option value="11:30">11:30 AM (Daylight Focus)</option>
-                  <option value="14:30">2:30 PM (Afternoon Sunlight)</option>
-                  <option value="17:00">5:00 PM (Golden Hour)</option>
-                  <option value="18:30">6:30 PM (Evening Wind-Down)</option>
+                  <option value="10:00 AM">10:00 AM (Morning Chai / Coffee)</option>
+                  <option value="11:30 AM">11:30 AM (Daylight Focus)</option>
+                  <option value="02:30 PM">2:30 PM (Afternoon)</option>
+                  <option value="05:00 PM">5:00 PM (Sunset Hour)</option>
+                  <option value="07:00 PM">7:00 PM (Evening Post-Work)</option>
                 </select>
               </div>
             </div>
@@ -300,13 +302,13 @@ export default function BookingModal({
             {/* Lease Term */}
             <div className="space-y-1.5 pt-1">
               <label className="text-xs font-semibold text-charcoal-400 dark:text-charcoal-200">
-                Target Lease Duration
+                Target Agreement Duration (India Standard)
               </label>
               <div className="grid grid-cols-3 gap-2">
                 {[
                   { id: '3_months', label: '3 Months' },
                   { id: '6_months', label: '6 Months' },
-                  { id: '12_months', label: '12 Months (Preferred)' }
+                  { id: '11_months', label: '11 Months (Standard)' }
                 ].map((term) => (
                   <button
                     key={term.id}
@@ -377,7 +379,7 @@ export default function BookingModal({
                 Review Your Tour & Move-In Application
               </h4>
               <p className="text-xs text-charcoal-300 dark:text-charcoal-100 mt-0.5">
-                No fee or credit card required. Direct connection with verified housemates.
+                Zero brokerage fee. Direct connection with verified housemates.
               </p>
             </div>
 
@@ -389,7 +391,7 @@ export default function BookingModal({
               <div className="flex justify-between py-1 border-b border-ivory-200 dark:border-charcoal-500">
                 <span className="text-charcoal-300 dark:text-charcoal-200">Tour Format:</span>
                 <span className="font-bold text-terracotta">
-                  {tourType === '3d_virtual' ? '3D Spatial Virtual Tour' : 'In-Person Walkthrough'}
+                  {tourType === 'video_walkthrough' ? 'Guided Video Walkthrough' : 'In-Person Walkthrough'}
                 </span>
               </div>
               <div className="flex justify-between py-1 border-b border-ivory-200 dark:border-charcoal-500">
@@ -398,17 +400,17 @@ export default function BookingModal({
               </div>
               <div className="flex justify-between py-1 border-b border-ivory-200 dark:border-charcoal-500">
                 <span className="text-charcoal-300 dark:text-charcoal-200">Monthly Rent:</span>
-                <span className="font-bold text-charcoal dark:text-ivory">${property.pricePerMonth}/mo (All inclusive)</span>
+                <span className="font-bold text-charcoal dark:text-ivory">₹{property.pricePerMonth.toLocaleString('en-IN')}/mo (All inclusive)</span>
               </div>
               <div className="flex justify-between py-1">
-                <span className="text-charcoal-300 dark:text-charcoal-200">Primary Resident Contact:</span>
+                <span className="text-charcoal-300 dark:text-charcoal-200">Lead Resident Contact:</span>
                 <span className="font-bold text-charcoal dark:text-ivory">{property.flatmates[0]?.name}</span>
               </div>
             </div>
 
             <div className="p-3.5 rounded-xl bg-sage/10 text-sage dark:text-sage-light text-xs flex items-center gap-2 border border-sage/20">
               <ShieldCheck className="w-4 h-4 shrink-0" />
-              <span>CoHaven Guarantee: Identity verified and deposits held in secure digital escrow.</span>
+              <span>CoHaven Guarantee: 100% Aadhaar verified profiles and zero brokerage fees.</span>
             </div>
 
             <div className="flex items-center justify-between pt-4 border-t border-ivory-300 dark:border-charcoal-400">
@@ -450,17 +452,19 @@ export default function BookingModal({
                 You're Scheduled to Meet the Housemates!
               </h3>
               <p className="text-xs sm:text-sm text-charcoal-300 dark:text-charcoal-100 max-w-md mx-auto">
-                {property.flatmates[0]?.name} and the housemates have received your profile and calendar invite for <strong className="text-charcoal dark:text-ivory">{selectedDate} at {selectedTime}</strong>.
+                {property.flatmates[0]?.name} has received your profile and calendar invite for <strong className="text-charcoal dark:text-ivory">{selectedDate} at {selectedTime}</strong>.
               </p>
             </div>
 
             <div className="p-4 rounded-2xl bg-ivory-50 dark:bg-charcoal-600 border border-ivory-300 dark:border-charcoal-500 max-w-sm mx-auto flex items-center gap-3 text-left">
-              <SafeImage
-                src={property.flatmates[0]?.avatar}
-                alt={property.flatmates[0]?.name}
-                kind="avatar"
-                className="w-10 h-10 rounded-full object-cover ring-2 ring-terracotta"
-              />
+              <div className="w-10 h-10 rounded-full overflow-hidden ring-2 ring-terracotta shrink-0">
+                <SmartImage
+                  src={property.flatmates[0]?.avatar}
+                  alt={property.flatmates[0]?.name}
+                  isAvatar={true}
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <div className="flex-1 min-w-0">
                 <div className="text-xs font-bold text-charcoal dark:text-ivory">
                   {property.flatmates[0]?.name}

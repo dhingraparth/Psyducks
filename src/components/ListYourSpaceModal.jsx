@@ -13,9 +13,15 @@ import {
   Camera, 
   ShieldCheck 
 } from 'lucide-react';
+import SmartImage from './SmartImage';
+import { 
+  SVG_LIVING_COMMONS, 
+  SVG_MASTER_SUITE, 
+  SVG_CHEF_KITCHEN, 
+  SVG_ROOFTOP_TERRACE, 
+  SVG_AVATAR_AARAV 
+} from '../utils/svgImages';
 import { soundEngine } from '../utils/audio';
-import SafeImage from './SafeImage';
-import { PROPERTY_GALLERIES, USER_AVATAR } from '../utils/images';
 
 export default function ListYourSpaceModal({
   isOpen,
@@ -28,17 +34,21 @@ export default function ListYourSpaceModal({
     title: "",
     subtitle: "",
     neighborhood: "",
-    city: "Brooklyn, New York",
-    pricePerMonth: 1250,
-    deposit: 1250,
+    city: "Bengaluru, Karnataka",
+    pricePerMonth: 22000,
+    deposit: 44000,
     roomType: "Private Room",
     sqft: 210,
     availableDate: "2026-12-01",
-    amenities: ["Gigabit Fiber Wi-Fi", "Weekly Deep Clean", "In-Unit Washer & Dryer", "Chef's Kitchen"],
+    amenities: ["1 Gbps JioFiber Wi-Fi", "Daily Cook & Maid", "In-Unit Washing Machine", "Air Conditioner"],
     lifestyleTags: ["Remote Work Friendly", "Plant Lovers", "Early Risers", "Non-Smoking"],
     primaryFlatmateName: "You (Host)",
-    primaryFlatmateRole: "Creative Tech Lead",
-    images: PROPERTY_GALLERIES.kanso.slice(0, 3)
+    primaryFlatmateRole: "Product Designer",
+    images: [
+      SVG_LIVING_COMMONS,
+      SVG_MASTER_SUITE,
+      SVG_CHEF_KITCHEN
+    ]
   });
 
   if (!isOpen) return null;
@@ -58,10 +68,10 @@ export default function ListYourSpaceModal({
     soundEngine.playSuccess();
 
     const newProperty = {
-      id: `coh-custom-${Date.now()}`,
+      id: `coh-in-${Date.now()}`,
       title: formData.title || "The Sunlit Scandinavian Sanctuary",
-      subtitle: formData.subtitle || "Architectural residence with natural timber & peaceful vibes",
-      neighborhood: formData.neighborhood || "Greenpoint",
+      subtitle: formData.subtitle || "Architectural residence with natural teakwood & peaceful vibe",
+      neighborhood: formData.neighborhood || "Koramangala 4th Block",
       city: formData.city,
       pricePerMonth: Number(formData.pricePerMonth),
       deposit: Number(formData.deposit),
@@ -78,16 +88,16 @@ export default function ListYourSpaceModal({
       images: formData.images,
       amenities: formData.amenities,
       lifestyleTags: formData.lifestyleTags,
-      utilitiesIncluded: ["High-speed Wi-Fi", "Water", "Gas", "Cleaning Supplies"],
-      estimatedUtilitiesCost: 75,
-      description: "A brand new, carefully designed shared living space with generous natural light, acoustic isolation, and dedicated communal areas for creative professionals.",
+      utilitiesIncluded: ["Airtel/Jio Fiber", "Water", "Housekeeper", "Maintenance"],
+      estimatedUtilitiesCost: 1600,
+      description: "A brand new, carefully designed shared living space with generous natural light, acoustic isolation, and dedicated communal areas for tech and creative professionals.",
       flatmates: [
         {
           id: `fm-${Date.now()}`,
           name: formData.primaryFlatmateName,
-          age: 30,
+          age: 29,
           role: formData.primaryFlatmateRole,
-          avatar: USER_AVATAR,
+          avatar: SVG_AVATAR_AARAV,
           bio: "Looking forward to sharing our space with someone mindful, clean, and respectful of focus hours.",
           sleepSchedule: "Balanced",
           cleanliness: "Immaculate",
@@ -97,18 +107,22 @@ export default function ListYourSpaceModal({
       ],
       houseRules: [
         { rule: "Clean Counters", desc: "Keep kitchen surfaces clean and clear after meals." },
-        { rule: "Quiet Hours", desc: "10:30 PM to 7:30 AM peaceful hours." }
+        { rule: "Quiet Hours", desc: "11:00 PM to 7:30 AM peaceful hours." }
       ],
       neighborhoodScores: {
         transit: 95,
         walkability: 96,
         cafes: 94,
-        noiseLevel: "Quiet residential"
-      }
+        noiseLevel: "Quiet residential lane"
+      },
+      rooms: [
+        { id: "r1", name: "Living Commons", sqft: 340, status: "Shared", occupant: "All Flatmates", photo: SVG_LIVING_COMMONS, acoustic: "24 dB", daylight: "Balcony Facing" },
+        { id: "r2", name: "Private Room", sqft: Number(formData.sqft), status: "Vacant", occupant: `Available for You (₹${Number(formData.pricePerMonth).toLocaleString('en-IN')}/mo)`, photo: SVG_MASTER_SUITE, acoustic: "20 dB", daylight: "Morning Sun" }
+      ]
     };
 
     onAddProperty(newProperty);
-    if (onShowToast) onShowToast("Your space was successfully published to CoHaven!");
+    if (onShowToast) onShowToast("Your space was successfully published to CoHaven India!");
     onClose();
   };
 
@@ -123,10 +137,10 @@ export default function ListYourSpaceModal({
             </div>
             <div>
               <h3 className="font-bold text-base text-charcoal dark:text-ivory font-sans">
-                List Your Space on CoHaven
+                List Your Space on CoHaven (India)
               </h3>
               <p className="text-[11px] text-charcoal-300 dark:text-charcoal-200">
-                Connect with acoustically-verified and compatible housemates
+                Connect with Aadhaar-verified and compatible housemates
               </p>
             </div>
           </div>
@@ -145,11 +159,11 @@ export default function ListYourSpaceModal({
         {/* Step Indicator */}
         <div className="flex items-center justify-between py-4 text-xs font-mono border-b border-ivory-200 dark:border-charcoal-600 mb-6">
           <span className={`font-semibold ${step >= 1 ? 'text-terracotta' : 'text-charcoal-300'}`}>
-            1. Property & Location
+            1. Property & City
           </span>
           <span>→</span>
           <span className={`font-semibold ${step >= 2 ? 'text-terracotta' : 'text-charcoal-300'}`}>
-            2. Specs & Rent
+            2. Specs & Rent (₹)
           </span>
           <span>→</span>
           <span className={`font-semibold ${step >= 3 ? 'text-terracotta' : 'text-charcoal-300'}`}>
@@ -166,7 +180,7 @@ export default function ListYourSpaceModal({
               </label>
               <input
                 type="text"
-                placeholder="e.g. The Sunlit Nordic Loft & Garden"
+                placeholder="e.g. The Sunlit Indiranagar Loft & Terrace"
                 value={formData.title}
                 onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                 className="w-full text-xs p-3 rounded-xl border border-ivory-300 dark:border-charcoal-500 bg-white dark:bg-charcoal-600 text-charcoal dark:text-ivory focus:outline-none"
@@ -179,7 +193,7 @@ export default function ListYourSpaceModal({
               </label>
               <input
                 type="text"
-                placeholder="e.g. Minimalist brownstone with double-height ceiling and calm terrace"
+                placeholder="e.g. Minimalist flat with high ceilings, teak furnishings and quiet balcony"
                 value={formData.subtitle}
                 onChange={(e) => setFormData({ ...formData, subtitle: e.target.value })}
                 className="w-full text-xs p-3 rounded-xl border border-ivory-300 dark:border-charcoal-500 bg-white dark:bg-charcoal-600 text-charcoal dark:text-ivory focus:outline-none"
@@ -196,12 +210,12 @@ export default function ListYourSpaceModal({
                   onChange={(e) => setFormData({ ...formData, city: e.target.value })}
                   className="w-full text-xs p-3 rounded-xl border border-ivory-300 dark:border-charcoal-500 bg-white dark:bg-charcoal-600 text-charcoal dark:text-ivory focus:outline-none cursor-pointer"
                 >
-                  <option value="Brooklyn, New York">Brooklyn, New York</option>
-                  <option value="Berlin, Germany">Berlin, Germany</option>
-                  <option value="London, United Kingdom">London, United Kingdom</option>
-                  <option value="Stockholm, Sweden">Stockholm, Sweden</option>
-                  <option value="San Francisco, California">San Francisco, California</option>
-                  <option value="Amsterdam, Netherlands">Amsterdam, Netherlands</option>
+                  <option value="Bengaluru, Karnataka">Bengaluru, Karnataka</option>
+                  <option value="Mumbai, Maharashtra">Mumbai, Maharashtra</option>
+                  <option value="New Delhi, Delhi NCR">New Delhi, Delhi NCR</option>
+                  <option value="Hyderabad, Telangana">Hyderabad, Telangana</option>
+                  <option value="Pune, Maharashtra">Pune, Maharashtra</option>
+                  <option value="Goa (Assagao / Anjuna)">Goa (Assagao / Anjuna)</option>
                 </select>
               </div>
 
@@ -211,7 +225,7 @@ export default function ListYourSpaceModal({
                 </label>
                 <input
                   type="text"
-                  placeholder="e.g. Williamsburg, Greenpoint, Mitte"
+                  placeholder="e.g. Indiranagar, Koramangala, Bandra West, Pali Hill"
                   value={formData.neighborhood}
                   onChange={(e) => setFormData({ ...formData, neighborhood: e.target.value })}
                   className="w-full text-xs p-3 rounded-xl border border-ivory-300 dark:border-charcoal-500 bg-white dark:bg-charcoal-600 text-charcoal dark:text-ivory focus:outline-none"
@@ -232,7 +246,7 @@ export default function ListYourSpaceModal({
           </div>
         )}
 
-        {/* Step 2: Specs & Pricing */}
+        {/* Step 2: Specs & Pricing (INR) */}
         {step === 2 && (
           <div className="space-y-4 animate-fadeIn">
             <div className="grid grid-cols-2 gap-3">
@@ -245,8 +259,8 @@ export default function ListYourSpaceModal({
                   onChange={(e) => setFormData({ ...formData, roomType: e.target.value })}
                   className="w-full text-xs p-3 rounded-xl border border-ivory-300 dark:border-charcoal-500 bg-white dark:bg-charcoal-600 text-charcoal dark:text-ivory focus:outline-none cursor-pointer"
                 >
-                  <option value="Private Room">Private Room</option>
-                  <option value="Master Suite">Master Suite (En-Suite Bath)</option>
+                  <option value="Private Room">Private Room (Shared Washroom)</option>
+                  <option value="Master Suite">Master Suite (Attached Washroom)</option>
                 </select>
               </div>
 
@@ -266,7 +280,7 @@ export default function ListYourSpaceModal({
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-1">
                 <label className="text-xs font-semibold text-charcoal-400 dark:text-charcoal-200">
-                  Monthly Rent ($ USD)
+                  Monthly Rent (₹ INR)
                 </label>
                 <input
                   type="number"
@@ -278,7 +292,7 @@ export default function ListYourSpaceModal({
 
               <div className="space-y-1">
                 <label className="text-xs font-semibold text-charcoal-400 dark:text-charcoal-200">
-                  Security Deposit ($ USD)
+                  Security Deposit (₹ INR)
                 </label>
                 <input
                   type="number"
@@ -331,14 +345,14 @@ export default function ListYourSpaceModal({
                 Curated Architectural Photography Preview
               </h4>
               <p className="text-xs text-charcoal-300 dark:text-charcoal-100 mt-0.5">
-                Pre-selected high-resolution Scandinavian interior photography.
+                Guaranteed high-resolution rendering with warm architectural illustrations.
               </p>
             </div>
 
             <div className="grid grid-cols-3 gap-2">
               {formData.images.map((img, i) => (
-                <div key={i} className="aspect-[4/3] rounded-xl overflow-hidden border border-ivory-300 dark:border-charcoal-500">
-                  <SafeImage src={img} alt={`Space ${i}`} className="w-full h-full object-cover" />
+                <div key={i} className="aspect-[4/3] rounded-xl overflow-hidden border border-ivory-300 dark:border-charcoal-500 bg-ivory-200 dark:bg-charcoal-600">
+                  <SmartImage src={img} alt={`Space ${i}`} className="w-full h-full object-cover" />
                 </div>
               ))}
             </div>
@@ -346,7 +360,7 @@ export default function ListYourSpaceModal({
             <div className="p-4 rounded-2xl bg-ivory-50 dark:bg-charcoal-600 border border-ivory-300 dark:border-charcoal-500 text-xs space-y-1">
               <div className="font-bold text-charcoal dark:text-ivory">Ready to Publish:</div>
               <div className="text-charcoal-300 dark:text-charcoal-200">
-                {formData.title || "The Sunlit Scandinavian Sanctuary"} • ${formData.pricePerMonth}/mo • {formData.city}
+                {formData.title || "The Sunlit Scandinavian Sanctuary"} • ₹{Number(formData.pricePerMonth).toLocaleString('en-IN')}/mo • {formData.city}
               </div>
             </div>
 
@@ -365,7 +379,7 @@ export default function ListYourSpaceModal({
                 className="px-8 py-3 rounded-full bg-terracotta hover:bg-terracotta-dark text-white text-xs font-bold transition-all shadow-glow-terracotta flex items-center gap-2"
               >
                 <Sparkles className="w-4 h-4" />
-                <span>Publish Space to CoHaven</span>
+                <span>Publish Space to CoHaven India</span>
               </button>
             </div>
           </form>

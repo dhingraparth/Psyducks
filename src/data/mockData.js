@@ -1,14 +1,25 @@
+import { 
+  SVG_LIVING_COMMONS, 
+  SVG_MASTER_SUITE, 
+  SVG_CHEF_KITCHEN, 
+  SVG_ROOFTOP_TERRACE, 
+  SVG_AVATAR_AARAV, 
+  SVG_AVATAR_ANANYA, 
+  SVG_AVATAR_ROHAN, 
+  SVG_AVATAR_PRIYA 
+} from '../utils/svgImages';
+
 export const INITIAL_PROPERTIES = [
   {
     id: "coh-01",
     title: "The Kanso Nordic Atelier",
-    subtitle: "Sun-drenched Scandinavian brownstone with bespoke birch millwork & atrium",
-    neighborhood: "Williamsburg, North 7th",
-    city: "Brooklyn, New York",
-    pricePerMonth: 1450,
-    deposit: 1450,
+    subtitle: "Sun-drenched Scandinavian brownstone with teak wood millwork & central atrium",
+    neighborhood: "Indiranagar, 100ft Road",
+    city: "Bengaluru, Karnataka",
+    pricePerMonth: 24500,
+    deposit: 49000,
     roomType: "Private Room",
-    sqft: 220,
+    sqft: 240,
     totalTenants: 3,
     occupiedTenants: 2,
     availableDate: "2026-12-01",
@@ -18,32 +29,32 @@ export const INITIAL_PROPERTIES = [
     compatibilityScore: 98,
     featured: true,
     images: [
-      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=85",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=85"
+      SVG_LIVING_COMMONS,
+      SVG_MASTER_SUITE,
+      SVG_CHEF_KITCHEN,
+      SVG_ROOFTOP_TERRACE
     ],
     amenities: [
-      "Gigabit Fiber Wi-Fi",
-      "Weekly Professional Deep Clean",
-      "Sonos Architectural Audio",
-      "In-Unit Miele Washer & Dryer",
-      "Private Cedar Balcony",
-      "Chef's Gas Range & Island",
-      "Secure Keyless Biometric Entry",
-      "Rooftop Herb Garden"
+      "1 Gbps Airtel Extreme Fiber",
+      "Daily Professional Housekeeping",
+      "Sonos Ambient Room Audio",
+      "In-Unit Bosch Washer & Dryer",
+      "Private Teakwood Balcony",
+      "Modular Island & Air Fryer",
+      "24x7 Inverter & DG Power Backup",
+      "Rooftop Herb & Terrace Garden"
     ],
     lifestyleTags: ["Remote Work Friendly", "Plant Lovers", "Early Risers", "Cooks Together", "Non-Smoking", "Cat Friendly"],
-    utilitiesIncluded: ["High-speed Wi-Fi", "Water", "Gas", "Bi-weekly organic cleaning supplies"],
-    estimatedUtilitiesCost: 85,
-    description: "Designed by an architectural duo, The Kanso Atelier balances peaceful personal sanctuary with warm communal living. High ceilings, south-facing windows framing tree tops, and acoustic insulation between rooms provide an ideal work-from-home haven. The communal kitchen is fully stocked with Le Creuset and specialty pour-over equipment.",
+    utilitiesIncluded: ["Airtel Fiber", "Water & Society Maintenance", "Cooking Gas (PNG)", "Daily Housekeeper"],
+    estimatedUtilitiesCost: 1800,
+    description: "Designed by an architectural duo in prime Indiranagar, The Kanso Atelier balances quiet personal sanctuary with warm communal living. High ceilings, south-facing windows framing tree tops, and acoustic insulation between rooms provide an ideal work-from-home haven. The communal kitchen is fully stocked with Le Creuset and specialty pour-over equipment.",
     flatmates: [
       {
         id: "fm-01",
-        name: "Astrid Lindholm",
+        name: "Ananya Deshmukh",
         age: 28,
-        role: "Spatial UX Director",
-        avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+        role: "Spatial UX Lead",
+        avatar: SVG_AVATAR_ANANYA,
         bio: "Designing immersive apps by day, experimenting with sourdough and ceramics on Sunday mornings. Value clean shared counters and quiet weekday evenings.",
         sleepSchedule: "Early Bird (6:30 AM - 10:30 PM)",
         cleanliness: "Immaculate & Organized",
@@ -52,11 +63,11 @@ export const INITIAL_PROPERTIES = [
       },
       {
         id: "fm-02",
-        name: "Julian Rivera",
+        name: "Rohan Mehta",
         age: 31,
-        role: "Industrial Acoustic Engineer",
-        avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
-        bio: "Binaural audio enthusiast and marathon runner. Clean, respectful of focus times, always happy to share fresh batch cold-brew.",
+        role: "Acoustic & Hardware Engineer",
+        avatar: SVG_AVATAR_ROHAN,
+        bio: "Audio hardware enthusiast and marathon runner. Clean, respectful of focus times, always happy to share fresh batch pour-overs.",
         sleepSchedule: "Balanced (7:30 AM - 11:30 PM)",
         cleanliness: "Very Tidy",
         workStyle: "Studio-based (Away most days)",
@@ -64,10 +75,10 @@ export const INITIAL_PROPERTIES = [
       }
     ],
     houseRules: [
-      { rule: "Quiet Sanctuary Hours", desc: "10:30 PM to 7:30 AM on weekdays to respect sleep & deep focus." },
-      { rule: "Clean Counter Policy", desc: "Pots & dishes washed or placed in dishwasher immediately after dining." },
-      { rule: "Considerate Guests", desc: "Overnight partners welcome with gentle 24h heads-up in our shared group chat." },
-      { rule: "Green Living", desc: "Composting and mindful energy consumption encouraged." }
+      { rule: "Quiet Sanctuary Hours", desc: "11:00 PM to 7:30 AM on weekdays to respect sleep & deep focus." },
+      { rule: "Clean Counter Policy", desc: "Pots & dishes placed in dishwasher immediately after dining." },
+      { rule: "Considerate Guests", desc: "Overnight guests welcome with gentle 24h heads-up in our shared group chat." },
+      { rule: "Shoe-Free Sanctuary", desc: "Indoor slippers provided to keep teak flooring pristine." }
     ],
     neighborhoodScores: {
       transit: 98,
@@ -76,22 +87,22 @@ export const INITIAL_PROPERTIES = [
       noiseLevel: "Tranquil residential pocket"
     },
     rooms: [
-      { id: "r1", name: "Living Commons & Dining", sqft: 380, status: "Shared", occupant: "All Flatmates", photo: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80", acoustic: "24 dB", daylight: "South Facing (All Day)" },
-      { id: "r2", name: "Chef's Kitchen & Island", sqft: 190, status: "Shared", occupant: "All Flatmates", photo: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80", acoustic: "28 dB", daylight: "East Facing (Morning Sun)" },
-      { id: "r3", name: "Private Bedroom 01", sqft: 240, status: "Occupied", occupant: "Astrid (UX Director)", photo: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80", acoustic: "22 dB", daylight: "South-West Facing" },
-      { id: "r4", name: "Available Suite 02", sqft: 220, status: "Vacant", occupant: "Available for You ($1,450/mo)", photo: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80", acoustic: "20 dB (Acoustic Foam)", daylight: "South Facing + Balcony" }
+      { id: "r1", name: "Living Commons & Dining", sqft: 380, status: "Shared", occupant: "All Flatmates", photo: SVG_LIVING_COMMONS, acoustic: "24 dB", daylight: "South Facing (All Day)" },
+      { id: "r2", name: "Chef's Kitchen & Island", sqft: 190, status: "Shared", occupant: "All Flatmates", photo: SVG_CHEF_KITCHEN, acoustic: "28 dB", daylight: "East Facing (Morning Sun)" },
+      { id: "r3", name: "Private Bedroom 01", sqft: 240, status: "Occupied", occupant: "Ananya (UX Lead)", photo: SVG_MASTER_SUITE, acoustic: "22 dB", daylight: "South-West Facing" },
+      { id: "r4", name: "Available Suite 02", sqft: 220, status: "Vacant", occupant: "Available for You (₹24,500/mo)", photo: SVG_ROOFTOP_TERRACE, acoustic: "20 dB (Acoustic Foam)", daylight: "South Facing + Balcony" }
     ]
   },
   {
     id: "coh-02",
-    title: "Torup Eco-Loft & Courtyard",
-    subtitle: "Triple-height industrial loft with terrazzo floors, skylights & private botanical courtyard",
-    neighborhood: "Kreuzberg, Paul-Lincke-Ufer",
-    city: "Berlin, Germany",
-    pricePerMonth: 920,
-    deposit: 920,
+    title: "Bandra Sea-Breeze Haven",
+    subtitle: "Triple-height heritage loft with terrazzo floors, skylights & private botanical courtyard",
+    neighborhood: "Bandra West, Pali Hill",
+    city: "Mumbai, Maharashtra",
+    pricePerMonth: 32000,
+    deposit: 64000,
     roomType: "Master Suite",
-    sqft: 280,
+    sqft: 290,
     totalTenants: 4,
     occupiedTenants: 3,
     availableDate: "2026-11-15",
@@ -101,33 +112,33 @@ export const INITIAL_PROPERTIES = [
     compatibilityScore: 95,
     featured: true,
     images: [
-      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1400&q=85",
-      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1616046229478-9901c5536a45?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=85"
+      SVG_MASTER_SUITE,
+      SVG_LIVING_COMMONS,
+      SVG_CHEF_KITCHEN,
+      SVG_ROOFTOP_TERRACE
     ],
     amenities: [
-      "En-Suite Private Rainshower",
-      "Triple-Glazed Soundproof Glass",
-      "Underfloor Radiant Heating",
-      "Co-Working Studio Desk Pods",
-      "Espresso Bar (La Marzocco)",
-      "Courtyard Yoga Platform",
-      "Solar Powered Energy Grid",
-      "EV & Cargo Bike Parking"
+      "En-Suite Rainshower & Italian Bath",
+      "Double-Glazed Soundproof Glass",
+      "Daikin Inverter AC in all rooms",
+      "Co-Working Desk Pods",
+      "La Marzocco Espresso Machine",
+      "Private Sunset Balcony",
+      "24x7 MGL Piped Gas & Power Backup",
+      "Reserved Stilt Car Parking"
     ],
     lifestyleTags: ["Plant Lovers", "Creative Community", "Weekend Cookouts", "LGBTQ+ Friendly", "Hybrid Work", "Dog Friendly"],
-    utilitiesIncluded: ["100% Green Energy", "Water", "High-speed Internet", "Professional bi-weekly clean"],
-    estimatedUtilitiesCost: 65,
-    description: "A reimagined 1920s print house overlooking the canal. High ceilings, raw concrete pillars, and lush indoor fig trees define this architectural haven. The master suite features an en-suite bathroom with Italian terrazzo tiling and private morning terrace access.",
+    utilitiesIncluded: ["JioFiber 1Gbps", "Society Maintenance", "Water", "Housekeeper Service"],
+    estimatedUtilitiesCost: 2200,
+    description: "A reimagined Portuguese villa conversion in Pali Hill. High ceilings, exposed timber rafters, and sea-breeze balconies define this architectural haven. The master suite features an en-suite bathroom with Italian terrazzo tiling and private morning terrace access.",
     flatmates: [
       {
         id: "fm-03",
-        name: "Lukas Weber",
+        name: "Kabir Sen",
         age: 29,
         role: "Climate Tech Founder",
-        avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
-        bio: "Working on regenerative grid systems. Loves modular synths, pour-overs, and weekend cycle tours along the Spree.",
+        avatar: SVG_AVATAR_ROHAN,
+        bio: "Working on regenerative EV grid systems. Loves pour-overs, film photography, and Sunday morning cycling on Bandra Carter Road.",
         sleepSchedule: "Night Owl (8:30 AM - 1:00 AM)",
         cleanliness: "Organized",
         workStyle: "Hybrid Tech Work",
@@ -135,11 +146,11 @@ export const INITIAL_PROPERTIES = [
       },
       {
         id: "fm-04",
-        name: "Noor Al-Mansoor",
+        name: "Priya Nair",
         age: 27,
-        role: "Editorial Fashion Stylist",
-        avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=400&q=80",
-        bio: "Appreciates art books, vintage lamps, and communal Friday dinners. I have a very friendly whippet named Juno.",
+        role: "Editorial Stylist",
+        avatar: SVG_AVATAR_PRIYA,
+        bio: "Appreciates art books, vintage lamps, and communal Friday dinners. I have a very friendly golden retriever named Juno.",
         sleepSchedule: "Balanced (8:00 AM - 12:00 AM)",
         cleanliness: "Meticulous",
         workStyle: "Studio & On-location",
@@ -147,31 +158,31 @@ export const INITIAL_PROPERTIES = [
       }
     ],
     houseRules: [
-      { rule: "Shared Gastronomy", desc: "Optional communal vegetarian dinner every Friday night." },
-      { rule: "Shoe-Free Sanctuary", desc: "Indoor slippers provided to keep hardwood and terrazzo pristine." },
-      { rule: "Quiet Zones", desc: "Headphones required for video calls in the communal salon." }
+      { rule: "Shared Gastronomy", desc: "Optional communal Sunday brunch every week." },
+      { rule: "Shoe-Free Sanctuary", desc: "Indoor slippers provided in the entrance foyer." },
+      { rule: "Quiet Zones", desc: "Headphones required for video calls in communal living lounge." }
     ],
     neighborhoodScores: {
       transit: 95,
       walkability: 98,
       cafes: 97,
-      noiseLevel: "Vibrant waterside promenade"
+      noiseLevel: "Peaceful tree-lined Pali Hill street"
     },
     rooms: [
-      { id: "r1", name: "Double-Height Atrium Lounge", sqft: 420, status: "Shared", occupant: "All Flatmates", photo: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80", acoustic: "26 dB", daylight: "Skylight & Garden Glass" },
-      { id: "r2", name: "Master Suite with Terrazzo Bath", sqft: 280, status: "Vacant", occupant: "Available Now (€920/mo)", photo: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80", acoustic: "18 dB (Quiet Zone)", daylight: "Courtyard Garden View" }
+      { id: "r1", name: "Double-Height Atrium Lounge", sqft: 420, status: "Shared", occupant: "All Flatmates", photo: SVG_LIVING_COMMONS, acoustic: "26 dB", daylight: "Skylight & Garden Glass" },
+      { id: "r2", name: "Master Suite with Terrazzo Bath", sqft: 290, status: "Vacant", occupant: "Available Now (₹32,000/mo)", photo: SVG_MASTER_SUITE, acoustic: "18 dB (Quiet Zone)", daylight: "Courtyard Garden View" }
     ]
   },
   {
     id: "coh-03",
-    title: "Södermalm Light Conservatory",
-    subtitle: "Warm minimalist penthouse with panoramic city views, sauna & private mezzanine",
-    neighborhood: "Södermalm, Mariatorget",
-    city: "Stockholm, Sweden",
-    pricePerMonth: 1100,
-    deposit: 1100,
+    title: "Koramangala Green Conservatory",
+    subtitle: "Warm minimalist residence with panoramic garden views, private terrace & acoustic focus pods",
+    neighborhood: "Koramangala, 4th Block",
+    city: "Bengaluru, Karnataka",
+    pricePerMonth: 18500,
+    deposit: 37000,
     roomType: "Private Room",
-    sqft: 195,
+    sqft: 210,
     totalTenants: 3,
     occupiedTenants: 2,
     availableDate: "2026-12-15",
@@ -181,32 +192,32 @@ export const INITIAL_PROPERTIES = [
     compatibilityScore: 92,
     featured: false,
     images: [
-      "https://images.unsplash.com/photo-1502005229762-ee1b2b804561?auto=format&fit=crop&w=1400&q=85",
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=85"
+      SVG_ROOFTOP_TERRACE,
+      SVG_LIVING_COMMONS,
+      SVG_MASTER_SUITE,
+      SVG_CHEF_KITCHEN
     ],
     amenities: [
-      "Authentic Swedish Cedar Sauna",
+      "Custom Teak Work Desks",
       "Panoramic Rooftop Balcony",
-      "Ergonomic Herman Miller Desks",
-      "Underground Heated Bike Vault",
+      "Ergonomic Herman Miller Chairs",
+      "Gated EV Scooter Charging",
       "Custom Oak Wardrobes",
-      "Filtered Triple-Osmosis Water System",
-      "Weekly Linen Service Option"
+      "Triple-Osmosis RO Water System",
+      "Weekly Deep Linen Clean"
     ],
     lifestyleTags: ["Early Risers", "Wellness Focused", "Quiet Evenings", "Minimalist Living", "No Pets", "Non-Smoking"],
-    utilitiesIncluded: ["District Heating", "High-speed Fiber", "Sauna Electricity", "Water"],
-    estimatedUtilitiesCost: 70,
-    description: "Pure Scandinavian warmth. Features bleached oak flooring, floor-to-ceiling glass doors opening onto a copper-clad balcony, and a traditional cedar sauna for cold Nordic winter evenings.",
+    utilitiesIncluded: ["High-speed Fiber", "Cook & Maid Service", "RO Water", "Maintenance"],
+    estimatedUtilitiesCost: 1500,
+    description: "Pure warmth and greenery. Features bleached oak flooring, floor-to-ceiling glass doors opening onto an ivy-covered balcony, and dedicated acoustic quiet areas for engineering and design leads.",
     flatmates: [
       {
         id: "fm-05",
-        name: "Elin Engström",
+        name: "Dia Banerjee",
         age: 30,
-        role: "Ceramicist & Landscape Architect",
-        avatar: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80",
-        bio: "Early bird who loves morning cold plunges and brewing filter coffee. Gentle presence who treasures order and quiet aesthetics.",
+        role: "Urban Architect",
+        avatar: SVG_AVATAR_ANANYA,
+        bio: "Early bird who loves morning terrace yoga and brewing fresh filter coffee. Gentle presence who treasures order and quiet aesthetics.",
         sleepSchedule: "Early Bird (6:00 AM - 10:00 PM)",
         cleanliness: "Immaculate",
         workStyle: "Studio (Away 8-5)",
@@ -214,9 +225,9 @@ export const INITIAL_PROPERTIES = [
       }
     ],
     houseRules: [
-      { rule: "Sauna Booking Etiquette", desc: "Reserve times in our shared app so everyone enjoys private relaxation." },
+      { rule: "Terrace Etiquette", desc: "Respect quiet meditation hours on the terrace before 8 AM." },
       { rule: "Zero Clutter Policy", desc: "Common spaces remain artfully uncluttered at all times." },
-      { rule: "No Smoking or Vaping", desc: "Strictly smoke-free throughout building and balcony." }
+      { rule: "Strictly Non-Smoking", desc: "Smoke-free throughout apartment and balconies." }
     ],
     neighborhoodScores: {
       transit: 97,
@@ -225,18 +236,18 @@ export const INITIAL_PROPERTIES = [
       noiseLevel: "Very quiet residential park edge"
     },
     rooms: [
-      { id: "r1", name: "Penthouse Conservatory", sqft: 350, status: "Shared", occupant: "All Flatmates", photo: "https://images.unsplash.com/photo-1502005229762-ee1b2b804561?auto=format&fit=crop&w=800&q=80", acoustic: "20 dB", daylight: "360-Degree Skyline" },
-      { id: "r2", name: "East Sun Bedroom", sqft: 195, status: "Vacant", occupant: "Available Dec 15 ($1,100/mo)", photo: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80", acoustic: "19 dB", daylight: "Sunrise Over Mariatorget" }
+      { id: "r1", name: "Penthouse Conservatory", sqft: 350, status: "Shared", occupant: "All Flatmates", photo: SVG_ROOFTOP_TERRACE, acoustic: "20 dB", daylight: "360-Degree Garden Canopy" },
+      { id: "r2", name: "East Sun Bedroom", sqft: 210, status: "Vacant", occupant: "Available Dec 15 (₹18,500/mo)", photo: SVG_MASTER_SUITE, acoustic: "19 dB", daylight: "Sunrise Over 4th Block Park" }
     ]
   },
   {
     id: "coh-04",
-    title: "The Shoreditch Foundry Commons",
-    subtitle: "Heritage brick conversion with exposed timber trusses, communal library & cinema lounge",
-    neighborhood: "Shoreditch, Redchurch St",
-    city: "London, United Kingdom",
-    pricePerMonth: 1280,
-    deposit: 1280,
+    title: "Hauz Khas Heritage Commons",
+    subtitle: "Heritage brick residence overlooking the lake with exposed timber trusses & library",
+    neighborhood: "Hauz Khas Village",
+    city: "New Delhi, Delhi NCR",
+    pricePerMonth: 22000,
+    deposit: 44000,
     roomType: "Private Room",
     sqft: 240,
     totalTenants: 4,
@@ -248,32 +259,32 @@ export const INITIAL_PROPERTIES = [
     compatibilityScore: 97,
     featured: true,
     images: [
-      "https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&w=1400&q=85",
-      "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1200&q=85"
+      SVG_CHEF_KITCHEN,
+      SVG_LIVING_COMMONS,
+      SVG_MASTER_SUITE,
+      SVG_ROOFTOP_TERRACE
     ],
     amenities: [
       "4K Projector Cinema Nook",
       "Curated Art & Architecture Library",
-      "Smeg Kitchen Appliances",
-      "Bespoke Brass Fixtures",
+      "Modular Kitchen Appliances",
+      "Air Purifiers (HEPA 99.9%) in all rooms",
       "Private Workspace Booths",
-      "Dry Cleaning Pickup Locker",
-      "Private Secure Entrance"
+      "Dry Cleaning Pickup",
+      "Private Guarded Entrance"
     ],
     lifestyleTags: ["Designers & Founders", "Dinner Parties", "Cocktail Enthusiasts", "Remote Friendly", "Flexible Hours"],
-    utilitiesIncluded: ["Fiber Internet", "Council Tax", "Water", "Building Manager"],
-    estimatedUtilitiesCost: 90,
-    description: "Located seconds from Shoreditch High Street, this converted Victorian warehouse blends rich historic texture with ultra-contemporary comfort. The bedroom features double acoustic glazing, custom built-in walnut closets, and a cozy reading corner.",
+    utilitiesIncluded: ["High-speed Fiber", "HEPA Air Filter Service", "Water", "Building Security"],
+    estimatedUtilitiesCost: 1900,
+    description: "Located seconds from the monument park and reservoir, this converted heritage space blends rich historic stone texture with contemporary comfort. The bedroom features double acoustic glazing, custom built-in walnut closets, and a cozy reading corner.",
     flatmates: [
       {
         id: "fm-06",
-        name: "Miles Hawthorne",
+        name: "Vikramaditya Roy",
         age: 33,
-        role: "Typeface Designer",
-        avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80",
-        bio: "Obsessed with micro-typography and natural wines. Often working quietly in the library or discovering vinyl in Brick Lane.",
+        role: "Typeface & Brand Designer",
+        avatar: SVG_AVATAR_ROHAN,
+        bio: "Obsessed with typography, South Indian filter coffee, and vinyl records. Often working quietly in the library or taking evening strolls around the lake.",
         sleepSchedule: "Night Owl (9:00 AM - 1:30 AM)",
         cleanliness: "Very Tidy",
         workStyle: "Full-Time Remote",
@@ -281,11 +292,11 @@ export const INITIAL_PROPERTIES = [
       },
       {
         id: "fm-07",
-        name: "Chantal Moreau",
+        name: "Meera Kapoor",
         age: 29,
-        role: "Film Producer",
-        avatar: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80",
-        bio: "Documentary producer who travels frequently. When home, loves screening indie films and cooking sharing platters.",
+        role: "Documentary Filmmaker",
+        avatar: SVG_AVATAR_PRIYA,
+        bio: "Documentary producer who travels frequently across India. When home, loves screening indie films and cooking sharing platters.",
         sleepSchedule: "Flexible",
         cleanliness: "Tidy",
         workStyle: "Frequent Travel / Studio",
@@ -303,18 +314,18 @@ export const INITIAL_PROPERTIES = [
       noiseLevel: "Energetic creative district"
     },
     rooms: [
-      { id: "r1", name: "Foundry Library & Salon", sqft: 400, status: "Shared", occupant: "All Flatmates", photo: "https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&w=800&q=80", acoustic: "24 dB", daylight: "Industrial Vault Skylights" },
-      { id: "r2", name: "Timber Trusses Bedroom", sqft: 240, status: "Vacant", occupant: "Available Nov 20 (£1,280/mo)", photo: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80", acoustic: "22 dB", daylight: "North Light (Uniform Studio Light)" }
+      { id: "r1", name: "Foundry Library & Salon", sqft: 400, status: "Shared", occupant: "All Flatmates", photo: SVG_LIVING_COMMONS, acoustic: "24 dB", daylight: "Monument Park Skylights" },
+      { id: "r2", name: "Timber Trusses Bedroom", sqft: 240, status: "Vacant", occupant: "Available Nov 20 (₹22,000/mo)", photo: SVG_MASTER_SUITE, acoustic: "22 dB", daylight: "North Light (Uniform Studio Light)" }
     ]
   },
   {
     id: "coh-05",
-    title: "Pacific Heights Sun Residence",
-    subtitle: "Mid-century architectural residence with Japanese cedar soaking tub & Golden Gate vistas",
-    neighborhood: "Pacific Heights, Vallejo St",
-    city: "San Francisco, California",
-    pricePerMonth: 1850,
-    deposit: 1850,
+    title: "Jubilee Hills Zen Residence",
+    subtitle: "Architectural hillside residence with plunge pool, courtyard & Banjara lake views",
+    neighborhood: "Jubilee Hills, Road No. 36",
+    city: "Hyderabad, Telangana",
+    pricePerMonth: 21000,
+    deposit: 42000,
     roomType: "Master Suite",
     sqft: 310,
     totalTenants: 3,
@@ -326,32 +337,32 @@ export const INITIAL_PROPERTIES = [
     compatibilityScore: 94,
     featured: false,
     images: [
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=85",
-      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1200&q=85"
+      SVG_LIVING_COMMONS,
+      SVG_MASTER_SUITE,
+      SVG_CHEF_KITCHEN,
+      SVG_ROOFTOP_TERRACE
     ],
     amenities: [
-      "Private Cedar Ofuro Soaking Tub",
-      "Panoramic Bay & Bridge Views",
-      "Dedicated EV Charging Garage",
+      "Private Soaking Tub & Open Shower",
+      "Panoramic City Skyline Views",
+      "Dedicated EV Car Parking",
       "Standing Walnut Motorized Desks",
-      "Commercial Grade Espresso Machine",
-      "Private Balcony & Zen Garden",
-      "Bi-Weekly Housekeeper"
+      "Commercial Espresso Machine",
+      "Private Terrace & Zen Garden",
+      "Daily Housekeeper"
     ],
     lifestyleTags: ["Remote Tech", "Mindfulness", "Weekend Hikes", "Plant Lovers", "Early Risers", "Non-Smoking"],
-    utilitiesIncluded: ["Ultra-Fiber 2Gbps", "Water & Trash", "Solar Power Supplement", "Housekeeping"],
-    estimatedUtilitiesCost: 110,
-    description: "An exceptional mid-century modern home overlooking the bay. Organic materials, paper lantern pendants by Noguchi, and floor-to-ceiling glass make every sunset an event. Ideal for professionals seeking tranquility in the city.",
+    utilitiesIncluded: ["Ultra-Fiber 1Gbps", "Water & Trash", "Solar Power Supplement", "Housekeeping"],
+    estimatedUtilitiesCost: 1700,
+    description: "An exceptional modern hillside home overlooking Jubilee Hills. Organic materials, paper lantern pendants, and floor-to-ceiling glass make every sunset memorable. Ideal for tech founders and designers seeking tranquility in the city.",
     flatmates: [
       {
         id: "fm-08",
-        name: "Kenji Sato",
+        name: "Arjun Kulkarni",
         age: 34,
-        role: "AI Alignment Scientist",
-        avatar: "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=400&q=80",
-        bio: "Deep thinker, trail runner in the Marin Headlands, and matcha enthusiast. Respects focus hours deeply.",
+        role: "AI Research Scientist",
+        avatar: SVG_AVATAR_ROHAN,
+        bio: "Deep learning engineer, trail runner in KBR Park, and green tea enthusiast. Respects focus hours deeply.",
         sleepSchedule: "Early Bird (6:00 AM - 10:30 PM)",
         cleanliness: "Immaculate",
         workStyle: "Remote Research",
@@ -369,18 +380,18 @@ export const INITIAL_PROPERTIES = [
       noiseLevel: "Serene & upscale residential"
     },
     rooms: [
-      { id: "r1", name: "Panoramic Bay Salon", sqft: 450, status: "Shared", occupant: "All Flatmates", photo: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80", acoustic: "22 dB", daylight: "Golden Gate Sunset Exposure" },
-      { id: "r2", name: "Master Suite & Zen Balcony", sqft: 310, status: "Vacant", occupant: "Available Nov 25 ($1,850/mo)", photo: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80", acoustic: "19 dB", daylight: "Private Western Balcony" }
+      { id: "r1", name: "Panoramic Hillside Salon", sqft: 450, status: "Shared", occupant: "All Flatmates", photo: SVG_LIVING_COMMONS, acoustic: "22 dB", daylight: "Golden Sunset Exposure" },
+      { id: "r2", name: "Master Suite & Zen Balcony", sqft: 310, status: "Vacant", occupant: "Available Nov 25 (₹21,000/mo)", photo: SVG_MASTER_SUITE, acoustic: "19 dB", daylight: "Private Western Balcony" }
     ]
   },
   {
     id: "coh-06",
-    title: "Jordaan Canal Atelier & Studio",
-    subtitle: "17th-century canal house with historic timber beams, private courtyard & ceramic studio",
-    neighborhood: "Jordaan, Prinsengracht",
-    city: "Amsterdam, Netherlands",
-    pricePerMonth: 990,
-    deposit: 990,
+    title: "Koregaon Park Treehouse Loft",
+    subtitle: "Modernist teakwood loft surrounded by banyan trees, ceramic studio & sunlit deck",
+    neighborhood: "Koregaon Park, Lane 6",
+    city: "Pune, Maharashtra",
+    pricePerMonth: 16500,
+    deposit: 33000,
     roomType: "Private Room",
     sqft: 205,
     totalTenants: 3,
@@ -392,35 +403,35 @@ export const INITIAL_PROPERTIES = [
     compatibilityScore: 91,
     featured: false,
     images: [
-      "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=1400&q=85",
-      "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1200&q=85"
+      SVG_ROOFTOP_TERRACE,
+      SVG_MASTER_SUITE,
+      SVG_LIVING_COMMONS,
+      SVG_CHEF_KITCHEN
     ],
     amenities: [
       "Historic Leaded Glass Windows",
       "Private Bike Mooring & Storage",
       "Basement Pottery Studio",
       "Sonos Sound Throughout",
-      "Smeg Induction Cooktop",
+      "Induction Cooktop & Chimney",
       "High-Pressure Rain Shower",
       "Sunny Ivy-Covered Courtyard"
     ],
     lifestyleTags: ["Bike Commuters", "Plant Lovers", "Creative Work", "LGBTQ+ Friendly", "Casual Dinners"],
-    utilitiesIncluded: ["Gas & Heating", "Fiber Wi-Fi", "Water", "Studio Access"],
-    estimatedUtilitiesCost: 75,
-    description: "Step into authentic Amsterdam heritage with modernized amenities. Overlooking the quiet Prinsengracht canal, this home balances Dutch cozy gezelligheid with refined modern Scandinavian furnishings.",
+    utilitiesIncluded: ["Gas & Power Backup", "Fiber Wi-Fi", "Water", "Housekeeper"],
+    estimatedUtilitiesCost: 1400,
+    description: "Step into authentic Koregaon Park tranquility. Shaded by ancient banyans, this home balances Scandinavian minimalism with warm Indian timber furnishings.",
     flatmates: [
       {
         id: "fm-09",
-        name: "Femke van Dijk",
+        name: "Pooja Hegde",
         age: 29,
-        role: "Urban Biologist & Illustrator",
-        avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
-        bio: "Lover of house plants, botanical prints, and Dutch cycling culture. Always up for a fresh mint tea on the courtyard bench.",
+        role: "Illustrator & Botanist",
+        avatar: SVG_AVATAR_PRIYA,
+        bio: "Lover of house plants, botanical watercolors, and Pune cafe culture. Always up for fresh chai on the terrace bench.",
         sleepSchedule: "Balanced (7:00 AM - 11:00 PM)",
         cleanliness: "Very Tidy",
-        workStyle: "Hybrid (University & Home)",
+        workStyle: "Hybrid (Studio & Home)",
         vibe: "Warm, artistic, friendly"
       }
     ],
@@ -432,23 +443,23 @@ export const INITIAL_PROPERTIES = [
       transit: 96,
       walkability: 100,
       cafes: 99,
-      noiseLevel: "Charming historic neighborhood"
+      noiseLevel: "Charming tree-lined Koregaon Park lane"
     },
     rooms: [
-      { id: "r1", name: "Canal-View Living Salon", sqft: 320, status: "Shared", occupant: "All Flatmates", photo: "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=800&q=80", acoustic: "25 dB", daylight: "Direct Canal Water Reflections" },
-      { id: "r2", name: "Courtyard Bedroom Suite", sqft: 205, status: "Vacant", occupant: "Available Dec 5 (€990/mo)", photo: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80", acoustic: "18 dB (Leafy Quiet)", daylight: "Morning Sun on Ivy Courtyard" }
+      { id: "r1", name: "Canal-View Living Salon", sqft: 320, status: "Shared", occupant: "All Flatmates", photo: SVG_LIVING_COMMONS, acoustic: "25 dB", daylight: "Tree Canopy Reflections" },
+      { id: "r2", name: "Courtyard Bedroom Suite", sqft: 205, status: "Vacant", occupant: "Available Dec 5 (₹16,500/mo)", photo: SVG_MASTER_SUITE, acoustic: "18 dB (Leafy Quiet)", daylight: "Morning Sun on Courtyard" }
     ]
   }
 ];
 
 export const INITIAL_USER = {
-  name: "Alexander Kim",
-  email: "alexander.kim@designstudio.io",
-  avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=400&q=80",
+  name: "Aarav Sharma",
+  email: "aarav.sharma@designstudio.in",
+  avatar: SVG_AVATAR_AARAV,
   occupation: "Senior Product Designer",
-  phone: "+1 (555) 234-8901",
+  phone: "+91 98765 43210",
   verified: true,
-  bio: "Product designer who loves quiet mornings, clean architectural spaces, and exploring neighborhood bakeries. Non-smoker, early riser, values considerate and open communication.",
+  bio: "Product designer in Bengaluru who loves quiet mornings, clean architectural spaces, and exploring neighborhood bakeries. Non-smoker, early riser, values considerate and open communication.",
   lifestyle: {
     sleep: "Early Bird (6:30 AM - 10:30 PM)",
     cleanliness: "Immaculate (Clean-as-you-go)",
@@ -463,80 +474,80 @@ export const INITIAL_APPLICATIONS = [
     id: "APP-8419",
     propertyId: "coh-01",
     propertyTitle: "The Kanso Nordic Atelier",
-    location: "Williamsburg, Brooklyn, NY",
+    location: "Indiranagar, Bengaluru",
     roomType: "Private Room",
-    monthlyRent: 1450,
+    monthlyRent: 24500,
     appliedDate: "2026-11-01",
     tourDate: "Friday, Nov 6 at 2:30 PM",
     tourType: "Guided Video Walkthrough",
     status: "Viewing Confirmed",
     statusBadge: "Confirmed",
     statusColor: "emerald",
-    primaryFlatmate: "Astrid Lindholm",
-    flatmateAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
+    primaryFlatmate: "Ananya Deshmukh",
+    flatmateAvatar: SVG_AVATAR_ANANYA
   },
   {
     id: "APP-3290",
     propertyId: "coh-04",
-    propertyTitle: "The Shoreditch Foundry Commons",
-    location: "Redchurch St, London",
+    propertyTitle: "Hauz Khas Heritage Commons",
+    location: "Hauz Khas Village, New Delhi",
     roomType: "Private Room",
-    monthlyRent: 1280,
+    monthlyRent: 22000,
     appliedDate: "2026-10-28",
     tourDate: "Tuesday, Nov 10 at 11:00 AM",
     tourType: "In-Person Walkthrough",
     status: "Under Review by Flatmates",
     statusBadge: "In Review",
     statusColor: "amber",
-    primaryFlatmate: "Miles Hawthorne",
-    flatmateAvatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80"
+    primaryFlatmate: "Vikramaditya Roy",
+    flatmateAvatar: SVG_AVATAR_ROHAN
   }
 ];
 
 export const INITIAL_MESSAGES = [
   {
     id: "msg-thread-1",
-    flatmateName: "Astrid Lindholm",
-    flatmateRole: "Spatial UX Director",
-    flatmateAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
+    flatmateName: "Ananya Deshmukh",
+    flatmateRole: "Spatial UX Lead",
+    flatmateAvatar: SVG_AVATAR_ANANYA,
     propertyTitle: "The Kanso Nordic Atelier",
     online: true,
-    lastMessage: "Looking forward to our virtual walkthrough this Friday! Let me know if you have any questions.",
+    lastMessage: "Looking forward to our walkthrough this Friday! Let me know if you have any questions about Indiranagar.",
     lastTime: "10:14 AM",
     unread: false,
     history: [
-      { id: 1, sender: "them", text: "Hi Alexander! Astrid here from The Kanso Atelier. We loved your application and your focus on clean shared counters and quiet weekday evenings.", time: "Yesterday, 3:45 PM" },
-      { id: 2, sender: "me", text: "Hi Astrid! Thanks so much for reaching out. The atelier looks stunning, especially the natural light and kitchen setup.", time: "Yesterday, 4:10 PM" },
-      { id: 3, sender: "them", text: "Looking forward to our virtual walkthrough this Friday! Let me know if you have any questions.", time: "10:14 AM" }
+      { id: 1, sender: "them", text: "Hi Aarav! Ananya here from The Kanso Atelier in Indiranagar. We loved your profile and shared interest in clean shared counters and quiet weekday evenings.", time: "Yesterday, 3:45 PM" },
+      { id: 2, sender: "me", text: "Hi Ananya! Thanks so much for reaching out. The atelier looks stunning, especially the natural light and kitchen setup.", time: "Yesterday, 4:10 PM" },
+      { id: 3, sender: "them", text: "Looking forward to our walkthrough this Friday! Let me know if you have any questions about Indiranagar.", time: "10:14 AM" }
     ]
   },
   {
     id: "msg-thread-2",
-    flatmateName: "Lukas Weber",
+    flatmateName: "Kabir Sen",
     flatmateRole: "Climate Tech Founder",
-    flatmateAvatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
-    propertyTitle: "Torup Eco-Loft & Courtyard",
+    flatmateAvatar: SVG_AVATAR_ROHAN,
+    propertyTitle: "Bandra Sea-Breeze Haven",
     online: false,
     lastMessage: "Would you be up for a quick 10-minute video call to say hello?",
     lastTime: "Yesterday",
     unread: true,
     history: [
-      { id: 1, sender: "them", text: "Hey Alexander! Saw your compatibility score came in at 95% with our eco-loft. Would you be up for a quick 10-minute video call to say hello?", time: "Yesterday, 6:30 PM" }
+      { id: 1, sender: "them", text: "Hey Aarav! Saw your compatibility score came in at 95% with our Pali Hill loft. Would you be up for a quick 10-minute video call to say hello?", time: "Yesterday, 6:30 PM" }
     ]
   }
 ];
 
 export const INITIAL_CHORES = [
-  { id: "c1", title: "Dishwasher Unload & Sanitize", assignee: "Alexander Kim", due: "Today", status: "Pending", category: "Kitchen" },
-  { id: "c2", title: "Recycling & Compost Disposal", assignee: "Astrid Lindholm", due: "Tomorrow", status: "Completed", category: "Waste" },
-  { id: "c3", title: "Living Room Plant Misting & Care", assignee: "Julian Rivera", due: "Thursday", status: "Pending", category: "Botanical" },
-  { id: "c4", title: "Coffee Bar Restock (Oat Milk & Beans)", assignee: "Alexander Kim", due: "Saturday", status: "Pending", category: "Pantry" }
+  { id: "c1", title: "Kitchen Counter Sanitize & Coffee Station", assignee: "Aarav Sharma", due: "Today", status: "Pending", category: "Kitchen" },
+  { id: "c2", title: "Recycling & Dry Waste Disposal", assignee: "Ananya Deshmukh", due: "Tomorrow", status: "Completed", category: "Waste" },
+  { id: "c3", title: "Balcony Plants Misting & Care", assignee: "Rohan Mehta", due: "Thursday", status: "Pending", category: "Botanical" },
+  { id: "c4", title: "Blue Tokai Coffee & Oat Milk Restock", assignee: "Aarav Sharma", due: "Saturday", status: "Pending", category: "Pantry" }
 ];
 
 export const INITIAL_EXPENSES = [
-  { id: "e1", description: "Gigabit Fiber Wi-Fi", amount: 80, splitWith: "3 People", myShare: 26.67, status: "Paid" },
-  { id: "e2", description: "Organic Coffee & Olive Oil Restock", amount: 48, splitWith: "3 People", myShare: 16.00, status: "Paid" },
-  { id: "e3", description: "Bi-Weekly Eco Deep Cleaning", amount: 180, splitWith: "3 People", myShare: 60.00, status: "Due Nov 15" }
+  { id: "e1", description: "Airtel 1Gbps Fiber Wi-Fi", amount: 1499, splitWith: "3 People", myShare: 499.66, status: "Paid" },
+  { id: "e2", description: "Blue Tokai Coffee Beans & Organic Groceries", amount: 1850, splitWith: "3 People", myShare: 616.66, status: "Paid" },
+  { id: "e3", description: "Cook & Daily Housekeeping Share", amount: 6000, splitWith: "3 People", myShare: 2000.00, status: "Due Nov 15" }
 ];
 
 export const QUIZ_QUESTIONS = [
@@ -712,8 +723,8 @@ export const COMMUNITY_BLUEPRINTS = [
     points: [
       "No dishes left in the sink overnight. Soak in basins or load immediately into the dishwasher.",
       "Kitchen island wiped clean and cleared of personal clutter after every meal.",
-      "Organic waste & compost emptied daily before bedtime to keep air fragrant.",
-      "Bi-weekly professional cleaning covers baseboards, ovens, and tile grout."
+      "Compost & organic waste emptied daily before bedtime to keep air fresh.",
+      "Daily maid and bi-weekly deep cleaning covers ovens, exhaust chimneys, and bathroom tiles."
     ]
   },
   {
@@ -721,10 +732,10 @@ export const COMMUNITY_BLUEPRINTS = [
     title: "Acoustic Harmony & Quiet Hours",
     summary: "Respecting deep REM sleep and high-focus remote work.",
     points: [
-      "Communal quiet hours begin at 10:30 PM on weekdays and 11:30 PM on weekends.",
-      "Headphones required for video calls in the communal salon and dining area.",
-      "Door closers calibrated with felt dampers for silent transitions.",
-      "Acoustic felt art panels installed in all bedrooms for voice isolation."
+      "Communal quiet hours begin at 11:00 PM on weekdays and 11:30 PM on weekends.",
+      "Headphones required for Zoom/Teams calls in the communal salon and dining area.",
+      "Felt dampers installed on all internal doors for silent operation.",
+      "Acoustic wall panels installed in all bedrooms for voice isolation."
     ]
   },
   {
@@ -732,21 +743,21 @@ export const COMMUNITY_BLUEPRINTS = [
     title: "Guest & Partner Etiquette",
     summary: "Hospitality without compromising personal sanctuary.",
     points: [
-      "A 24-hour heads-up message in the shared house thread for dinner visitors.",
+      "A 24-hour heads-up message in the shared house WhatsApp thread for dinner visitors.",
       "Overnight romantic partners capped at 2 consecutive nights per week unless agreed.",
       "Guests are never left unattended in communal rooms without their host present.",
-      "Respect house slipper rules: outdoor footwear never worn beyond the foyer."
+      "Respect house slipper rules: outdoor footwear never worn beyond the entrance foyer."
     ]
   },
   {
     id: "finances",
-    title: "Frictionless Shared Expenses",
+    title: "Frictionless Shared Expenses (UPI / Split)",
     summary: "Automated, fair, transparent splitting of everyday essentials.",
     points: [
-      "Household staples (oat milk, olive oil, spices, detergent) auto-replenished via CoHaven pool.",
-      "Rent and high-speed fiber split automatically via digital direct-debit on the 1st.",
+      "Household staples (milk, Blue Tokai coffee, cooking oils, dishwash) auto-split via UPI pool.",
+      "Rent and high-speed fiber split automatically via digital direct-debit on the 1st of every month.",
       "Transparent digital ledger with photo receipt scanning embedded in dashboard.",
-      "No awkward Venmo reminder requests—system handles automated gentle notifications."
+      "Zero awkward payment reminder texts—system handles automated gentle notifications."
     ]
   }
 ];

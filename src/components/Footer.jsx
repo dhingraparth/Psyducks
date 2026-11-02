@@ -6,10 +6,13 @@ export default function Footer({
   onShowToast,
   onOpenQuiz,
   onOpenCalculator,
+  onOpenFloorPlan,
   onEnterSimulation
 }) {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+
+  const handleFloorPlan = onOpenFloorPlan || onEnterSimulation;
 
   const handleSubscribe = (e) => {
     e.preventDefault();
@@ -71,12 +74,12 @@ export default function Footer({
               Explore Cities
             </h4>
             <ul className="space-y-2 text-charcoal-200">
-              <li className="hover:text-terracotta cursor-pointer transition-colors">Brooklyn, New York</li>
-              <li className="hover:text-terracotta cursor-pointer transition-colors">Kreuzberg, Berlin</li>
-              <li className="hover:text-terracotta cursor-pointer transition-colors">Shoreditch, London</li>
-              <li className="hover:text-terracotta cursor-pointer transition-colors">Södermalm, Stockholm</li>
-              <li className="hover:text-terracotta cursor-pointer transition-colors">Pacific Heights, SF</li>
-              <li className="hover:text-terracotta cursor-pointer transition-colors">Jordaan, Amsterdam</li>
+              <li className="hover:text-terracotta cursor-pointer transition-colors">Indiranagar & Koramangala, Bengaluru</li>
+              <li className="hover:text-terracotta cursor-pointer transition-colors">Bandra & Pali Hill, Mumbai</li>
+              <li className="hover:text-terracotta cursor-pointer transition-colors">Hauz Khas & Cyber City, Delhi NCR</li>
+              <li className="hover:text-terracotta cursor-pointer transition-colors">Jubilee Hills & Hitec City, Hyderabad</li>
+              <li className="hover:text-terracotta cursor-pointer transition-colors">Koregaon Park, Pune</li>
+              <li className="hover:text-terracotta cursor-pointer transition-colors">Anjuna & Assagao, Goa</li>
             </ul>
           </div>
 
@@ -87,8 +90,8 @@ export default function Footer({
             </h4>
             <ul className="space-y-2 text-charcoal-200">
               <li>
-                <button onClick={onEnterSimulation} className="hover:text-terracotta transition-colors text-left">
-                  3D Spatial Simulation
+                <button onClick={handleFloorPlan} className="hover:text-terracotta transition-colors text-left">
+                  Architectural Floor Plan & Acoustics
                 </button>
               </li>
               <li>
@@ -98,11 +101,11 @@ export default function Footer({
               </li>
               <li>
                 <button onClick={onOpenCalculator} className="hover:text-terracotta transition-colors text-left">
-                  Fair-Share Rent Calculator
+                  Fair-Share INR Rent Calculator
                 </button>
               </li>
-              <li className="hover:text-terracotta cursor-pointer transition-colors">Acoustic Testing Standards</li>
-              <li className="hover:text-terracotta cursor-pointer transition-colors">Verified Housemate Vetting</li>
+              <li className="hover:text-terracotta cursor-pointer transition-colors">Acoustic Testing Standards (&lt;32 dB)</li>
+              <li className="hover:text-terracotta cursor-pointer transition-colors">Aadhaar & Work Verified Vetting</li>
             </ul>
           </div>
 
