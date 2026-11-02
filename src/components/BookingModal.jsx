@@ -18,6 +18,7 @@ import {
   ShieldCheck
 } from 'lucide-react';
 import { soundEngine } from '../utils/audio';
+import SafeImage from './SafeImage';
 
 export default function BookingModal({
   isOpen,
@@ -85,7 +86,7 @@ export default function BookingModal({
         {/* Top Header */}
         <div className="flex items-center justify-between pb-5 border-b border-ivory-300 dark:border-charcoal-400">
           <div className="flex items-center gap-3">
-            <img
+            <SafeImage
               src={property.images[0]}
               alt={property.title}
               className="w-12 h-12 rounded-xl object-cover"
@@ -454,9 +455,10 @@ export default function BookingModal({
             </div>
 
             <div className="p-4 rounded-2xl bg-ivory-50 dark:bg-charcoal-600 border border-ivory-300 dark:border-charcoal-500 max-w-sm mx-auto flex items-center gap-3 text-left">
-              <img
+              <SafeImage
                 src={property.flatmates[0]?.avatar}
                 alt={property.flatmates[0]?.name}
+                kind="avatar"
                 className="w-10 h-10 rounded-full object-cover ring-2 ring-terracotta"
               />
               <div className="flex-1 min-w-0">

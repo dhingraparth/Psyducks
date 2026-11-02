@@ -14,6 +14,8 @@ import {
   ShieldCheck 
 } from 'lucide-react';
 import { soundEngine } from '../utils/audio';
+import SafeImage from './SafeImage';
+import { PROPERTY_GALLERIES, USER_AVATAR } from '../utils/images';
 
 export default function ListYourSpaceModal({
   isOpen,
@@ -36,11 +38,7 @@ export default function ListYourSpaceModal({
     lifestyleTags: ["Remote Work Friendly", "Plant Lovers", "Early Risers", "Non-Smoking"],
     primaryFlatmateName: "You (Host)",
     primaryFlatmateRole: "Creative Tech Lead",
-    images: [
-      "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85",
-      "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=1200&q=85"
-    ]
+    images: PROPERTY_GALLERIES.kanso.slice(0, 3)
   });
 
   if (!isOpen) return null;
@@ -89,7 +87,7 @@ export default function ListYourSpaceModal({
           name: formData.primaryFlatmateName,
           age: 30,
           role: formData.primaryFlatmateRole,
-          avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=400&q=80",
+          avatar: USER_AVATAR,
           bio: "Looking forward to sharing our space with someone mindful, clean, and respectful of focus hours.",
           sleepSchedule: "Balanced",
           cleanliness: "Immaculate",
@@ -340,7 +338,7 @@ export default function ListYourSpaceModal({
             <div className="grid grid-cols-3 gap-2">
               {formData.images.map((img, i) => (
                 <div key={i} className="aspect-[4/3] rounded-xl overflow-hidden border border-ivory-300 dark:border-charcoal-500">
-                  <img src={img} alt={`Space ${i}`} className="w-full h-full object-cover" />
+                  <SafeImage src={img} alt={`Space ${i}`} className="w-full h-full object-cover" />
                 </div>
               ))}
             </div>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Navigation from './components/Navigation';
 import HeroSection from './components/HeroSection';
+import CoreFeaturesShowcase from './components/CoreFeaturesShowcase';
+import InteractiveFloorPlan from './components/InteractiveFloorPlan';
 import PropertyDiscovery from './components/PropertyDiscovery';
 import PropertyDetailModal from './components/PropertyDetailModal';
 import FlatmateQuizModal from './components/FlatmateQuizModal';
@@ -9,8 +11,6 @@ import BookingModal from './components/BookingModal';
 import UserDashboard from './components/UserDashboard';
 import ListYourSpaceModal from './components/ListYourSpaceModal';
 import CommunitySection from './components/CommunitySection';
-import SpatialSimulation from './components/SpatialSimulation';
-import IntroSimulationLoader from './components/IntroSimulationLoader';
 import ToastNotification from './components/ToastNotification';
 import Footer from './components/Footer';
 
@@ -24,10 +24,6 @@ import { soundEngine } from './utils/audio';
 
 export default function App() {
   // 1. Core State with LocalStorage Persistence
-  const [showIntro, setShowIntro] = useState(() => {
-    return !sessionStorage.getItem('cohaven_intro_seen');
-  });
-
   const [properties, setProperties] = useState(() => {
     const saved = localStorage.getItem('cohaven_properties');
     return saved ? JSON.parse(saved) : INITIAL_PROPERTIES;
@@ -55,14 +51,13 @@ export default function App() {
   const [soundEnabled, setSoundEnabled] = useState(true);
 
   // 2. View and Modal States
-  const [currentView, setCurrentView] = useState('landing'); // 'landing', 'discover', 'community'
+  const [currentView, setCurrentView] = useState('landing');
   const [activePropertyDetail, setActivePropertyDetail] = useState(null);
   const [isQuizOpen, setIsQuizOpen] = useState(false);
   const [isListSpaceOpen, setIsListSpaceOpen] = useState(false);
   const [isDashboardOpen, setIsDashboardOpen] = useState(false);
   const [dashboardTab, setDashboardTab] = useState('overview');
   const [bookingProperty, setBookingProperty] = useState(null);
-  const [isSimulationOpen, setIsSimulationOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState(null);
   const [searchFilters, setSearchFilters] = useState({});
 
@@ -92,12 +87,6 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('cohaven_messages', JSON.stringify(messages));
   }, [messages]);
-
-  const handleCompleteIntro = () => {
-    sessionStorage.setItem('cohaven_intro_seen', 'true');
-    setShowIntro(false);
-    soundEngine.playSuccess();
-  };
 
   // 4. Action Handlers
   const handleToggleFavorite = (propertyId) => {
@@ -135,7 +124,7 @@ export default function App() {
           ...thread,
           history: [
             ...thread.history,
-            { sender: 'me', text, time: 'Just now' }
+            { id: Date.now(), sender: 'me', text, time: 'Just now' }
           ]
         };
       }
@@ -143,7 +132,7 @@ export default function App() {
     });
     setMessages(updated);
 
-    // Auto simulated response after 1.5 seconds
+    // Dynamic simulated response from housemates
     setTimeout(() => {
       soundEngine.playHover();
       setMessages(prev => prev.map(thread => {
@@ -152,22 +141,17 @@ export default function App() {
             ...thread,
             history: [
               ...thread.history,
-              { sender: 'them', text: "Thanks for the note, Alexander! Looking forward to connecting and showing you around.", time: 'Just now' }
+              { id: Date.now() + 1, sender: 'them', text: "Thanks for the note, Alexander! Looking forward to connecting and showing you around the residence.", time: 'Just now' }
             ]
           };
         }
         return thread;
       }));
-    }, 1500);
+    }, 1200);
   };
 
   return (
     <div className="min-h-screen flex flex-col font-sans bg-ivory text-charcoal dark:bg-charcoal-700 dark:text-ivory selection:bg-terracotta selection:text-white transition-colors duration-300">
-      {/* Intro Simulation Loader on first launch */}
-      {showIntro && (
-        <IntroSimulationLoader onComplete={handleCompleteIntro} />
-      )}
-
       {/* Global Sticky Navigation */}
       <Navigation
         currentView={currentView}
@@ -181,12 +165,15 @@ export default function App() {
           const el = document.getElementById('calculator');
           if (el) el.scrollIntoView({ behavior: 'smooth' });
         }}
+        onOpenFloorPlan={() => {
+          const el = document.getElementById('floorplan');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }}
         onOpenListSpace={() => setIsListSpaceOpen(true)}
         onOpenDashboard={(tab = 'overview') => {
           setDashboardTab(tab);
           setIsDashboardOpen(true);
         }}
-        onEnterSimulation={() => setIsSimulationOpen(true)}
         darkMode={darkMode}
         setDarkMode={setDarkMode}
         soundEnabled={soundEnabled}
@@ -202,31 +189,38 @@ export default function App() {
             if (el) el.scrollIntoView({ behavior: 'smooth' });
           }}
           onOpenQuiz={() => setIsQuizOpen(true)}
-          onEnterSimulation={() => setIsSimulationOpen(true)}
+          onOpenFloorPlan={() => {
+            const el = document.getElementById('floorplan');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }}
           onSearchFilter={handleHeroSearch}
           featuredProperty={properties[0]}
           onSelectProperty={(prop) => setActivePropertyDetail(prop)}
         />
 
-        {/* 3D Spatial Simulation Embedded Preview Section */}
-        <section className="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
-            <div>
-              <span className="text-xs font-mono uppercase tracking-wider text-terracotta font-bold">
-                Awwwards Spatial Showcase
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-bold font-sans text-charcoal dark:text-ivory mt-1">
-                Interactive 3D Living Room & Acoustic Simulation
-              </h2>
-            </div>
-            <p className="text-xs sm:text-sm text-charcoal-300 dark:text-charcoal-200 max-w-md">
-              Drag to orbit the architectural suite. Switch between morning, golden hour, and midnight lighting to inspect circadian illumination.
-            </p>
-          </div>
+        {/* 4 Core Features Showcase (Systematic & High UI/UX Quality) */}
+        <CoreFeaturesShowcase
+          onExploreHomes={() => {
+            const el = document.getElementById('discovery');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }}
+          onOpenQuiz={() => setIsQuizOpen(true)}
+          onOpenCalculator={() => {
+            const el = document.getElementById('calculator');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }}
+          onOpenDashboard={(tab) => {
+            setDashboardTab(tab);
+            setIsDashboardOpen(true);
+          }}
+        />
 
-          <SpatialSimulation
+        {/* Interactive Floor Plan & Room Navigator Section */}
+        <section id="floorplan" className="py-16 md:py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          <InteractiveFloorPlan
             property={properties[0]}
-            onBookTour={(p) => setBookingProperty(p)}
+            onBookRoom={(p) => setBookingProperty(p)}
+            onSelectProperty={(p) => setActivePropertyDetail(p)}
           />
         </section>
 
@@ -236,7 +230,10 @@ export default function App() {
           favorites={favorites}
           onToggleFavorite={handleToggleFavorite}
           onSelectProperty={(prop) => setActivePropertyDetail(prop)}
-          onEnterSimulation={() => setIsSimulationOpen(true)}
+          onOpenFloorPlan={() => {
+            const el = document.getElementById('floorplan');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
+          }}
           initialFilters={searchFilters}
         />
 
@@ -259,10 +256,13 @@ export default function App() {
           const el = document.getElementById('calculator');
           if (el) el.scrollIntoView({ behavior: 'smooth' });
         }}
-        onEnterSimulation={() => setIsSimulationOpen(true)}
+        onOpenFloorPlan={() => {
+          const el = document.getElementById('floorplan');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }}
       />
 
-      {/* Modals & Fullscreen Overlays */}
+      {/* Modals & Overlays */}
       {/* 1. Property Detail Modal */}
       {activePropertyDetail && (
         <PropertyDetailModal
@@ -274,9 +274,10 @@ export default function App() {
             setActivePropertyDetail(null);
             setBookingProperty(p);
           }}
-          onEnterSimulation={() => {
+          onOpenFloorPlan={() => {
             setActivePropertyDetail(null);
-            setIsSimulationOpen(true);
+            const el = document.getElementById('floorplan');
+            if (el) el.scrollIntoView({ behavior: 'smooth' });
           }}
         />
       )}
@@ -303,7 +304,7 @@ export default function App() {
         />
       )}
 
-      {/* 4. User Dashboard */}
+      {/* 4. Systematic Resident Hub & Dashboard */}
       <UserDashboard
         isOpen={isDashboardOpen}
         onClose={() => setIsDashboardOpen(false)}
@@ -319,6 +320,11 @@ export default function App() {
           setActivePropertyDetail(p);
         }}
         onRemoveFavorite={handleToggleFavorite}
+        onOpenCalculator={() => {
+          const el = document.getElementById('calculator');
+          if (el) el.scrollIntoView({ behavior: 'smooth' });
+        }}
+        onOpenQuiz={() => setIsQuizOpen(true)}
         onShowToast={(msg) => setToastMessage(msg)}
       />
 
@@ -329,22 +335,6 @@ export default function App() {
         onAddProperty={handleAddProperty}
         onShowToast={(msg) => setToastMessage(msg)}
       />
-
-      {/* 6. Fullscreen Standalone Spatial Simulation Modal */}
-      {isSimulationOpen && (
-        <div className="fixed inset-0 z-50 bg-black/90 flex flex-col p-2 sm:p-4 animate-fadeIn">
-          <div className="flex-1 w-full h-full relative">
-            <SpatialSimulation
-              property={properties[0]}
-              onClose={() => setIsSimulationOpen(false)}
-              onBookTour={(p) => {
-                setIsSimulationOpen(false);
-                setBookingProperty(p);
-              }}
-            />
-          </div>
-        </div>
-      )}
 
       {/* Toast Notification */}
       <ToastNotification

@@ -18,14 +18,14 @@ export default function PropertyDiscovery({
   favorites,
   onToggleFavorite,
   onSelectProperty,
-  onEnterSimulation,
+  onOpenFloorPlan,
   initialFilters = {}
 }) {
   const [searchTerm, setSearchTerm] = useState(initialFilters.city || '');
   const [selectedRoomType, setSelectedRoomType] = useState(initialFilters.roomType || 'All');
   const [maxPrice, setMaxPrice] = useState(initialFilters.maxPrice || 2500);
   const [selectedLifestyleTags, setSelectedLifestyleTags] = useState([]);
-  const [sortBy, setSortBy] = useState('featured'); // 'featured', 'price-asc', 'price-desc', 'compatibility'
+  const [sortBy, setSortBy] = useState('featured');
   const [showFilterDrawer, setShowFilterDrawer] = useState(false);
 
   const ALL_LIFESTYLE_TAGS = [
@@ -60,7 +60,6 @@ export default function PropertyDiscovery({
   // Filter & Sort Logic
   const filteredProperties = useMemo(() => {
     return properties.filter((prop) => {
-      // Search Term match
       if (searchTerm) {
         const query = searchTerm.toLowerCase();
         const matchesCity = prop.city.toLowerCase().includes(query);
@@ -69,17 +68,14 @@ export default function PropertyDiscovery({
         if (!matchesCity && !matchesNeigh && !matchesTitle) return false;
       }
 
-      // Room Type match
       if (selectedRoomType !== 'All' && prop.roomType !== selectedRoomType) {
         return false;
       }
 
-      // Price match
       if (prop.pricePerMonth > maxPrice) {
         return false;
       }
 
-      // Lifestyle tags match (any or all)
       if (selectedLifestyleTags.length > 0) {
         const hasTag = selectedLifestyleTags.some(tag => 
           prop.lifestyleTags.some(pt => pt.toLowerCase().includes(tag.toLowerCase()))
@@ -106,7 +102,7 @@ export default function PropertyDiscovery({
     <section id="discovery" className="py-16 md:py-24 bg-ivory-100 dark:bg-charcoal-800 min-h-screen">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-8 border-b border-ivory-300 dark:border-charcoal-400">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-8 border-b border-ivory-300 dark:border-charcoal-500">
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-sage/10 text-sage dark:text-sage-light mb-3">
               <Compass className="w-3.5 h-3.5" />
@@ -115,7 +111,7 @@ export default function PropertyDiscovery({
             <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-charcoal dark:text-ivory font-sans">
               Discover Architecturally Considered Homes
             </h2>
-            <p className="text-sm text-charcoal-300 dark:text-charcoal-100 mt-2 max-w-xl">
+            <p className="text-sm text-charcoal-300 dark:text-charcoal-200 mt-2 max-w-xl">
               Every home is acoustically rated and paired with vetted, compatible housemates sharing your daily rhythm.
             </p>
           </div>
@@ -134,7 +130,7 @@ export default function PropertyDiscovery({
                   soundEngine.playClick();
                   setSortBy(e.target.value);
                 }}
-                className="text-xs font-semibold py-2 pl-3 pr-8 rounded-full border border-ivory-300 dark:border-charcoal-400 bg-white dark:bg-charcoal-700 text-charcoal dark:text-ivory cursor-pointer focus:outline-none shadow-soft-sm"
+                className="text-xs font-semibold py-2 pl-3 pr-8 rounded-full border border-ivory-300 dark:border-charcoal-500 bg-white dark:bg-charcoal-700 text-charcoal dark:text-ivory cursor-pointer focus:outline-none shadow-soft-sm"
               >
                 <option value="featured">Featured First</option>
                 <option value="compatibility">Highest Match Score</option>
@@ -142,28 +138,11 @@ export default function PropertyDiscovery({
                 <option value="price-desc">Rent: High to Low</option>
               </select>
             </div>
-
-            {/* Filter Toggle Button on Mobile / Tablet */}
-            <button
-              onClick={() => {
-                soundEngine.playClick();
-                setShowFilterDrawer(!showFilterDrawer);
-              }}
-              className="lg:hidden p-2 rounded-full border border-ivory-300 dark:border-charcoal-400 bg-white dark:bg-charcoal-700 text-charcoal dark:text-ivory relative"
-              title="Filter spaces"
-            >
-              <SlidersHorizontal className="w-4 h-4" />
-              {activeFiltersCount > 0 && (
-                <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-terracotta text-white text-[9px] font-bold flex items-center justify-center">
-                  {activeFiltersCount}
-                </span>
-              )}
-            </button>
           </div>
         </div>
 
         {/* Search & Filter Bar Controls */}
-        <div className="bg-white/80 dark:bg-charcoal-700/80 backdrop-blur-md rounded-2xl p-4 sm:p-5 mb-8 shadow-soft-sm border border-ivory-300/80 dark:border-charcoal-500/60">
+        <div className="bg-white/90 dark:bg-charcoal-700/90 backdrop-blur-md rounded-2xl p-4 sm:p-5 mb-8 shadow-soft-sm border border-ivory-300 dark:border-charcoal-500">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
             {/* Search Input */}
             <div className="md:col-span-5 relative">
@@ -194,10 +173,10 @@ export default function PropertyDiscovery({
                     soundEngine.playClick();
                     setSelectedRoomType(type);
                   }}
-                  className={`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all ${
+                  className={`px-3 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition-all ${
                     selectedRoomType === type
                       ? 'bg-charcoal text-ivory dark:bg-terracotta dark:text-white shadow-sm'
-                      : 'bg-ivory-200/80 dark:bg-charcoal-600 text-charcoal-400 dark:text-charcoal-200 hover:bg-ivory-300'
+                      : 'bg-ivory-200 dark:bg-charcoal-600 text-charcoal-400 dark:text-charcoal-200 hover:bg-ivory-300'
                   }`}
                 >
                   {type}
@@ -270,7 +249,7 @@ export default function PropertyDiscovery({
                 isFavorite={favorites.includes(property.id)}
                 onToggleFavorite={onToggleFavorite}
                 onSelectProperty={onSelectProperty}
-                onEnterSimulation={onEnterSimulation}
+                onOpenFloorPlan={onOpenFloorPlan}
               />
             ))}
           </div>

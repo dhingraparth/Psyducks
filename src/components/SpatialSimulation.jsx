@@ -22,7 +22,8 @@ export default function SpatialSimulation({
   onClose,
   onSelectProperty,
   property,
-  onBookTour
+  onBookTour,
+  lite = false
 }) {
   const containerRef = useRef(null);
   const canvasRef = useRef(null);
@@ -66,13 +67,14 @@ export default function SpatialSimulation({
 
     const renderer = new THREE.WebGLRenderer({ 
       canvas: canvasRef.current, 
-      antialias: true,
-      powerPreference: "high-performance"
+      antialias: !lite,
+      powerPreference: lite ? "low-power" : "high-performance",
+      alpha: false
     });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, lite ? 1 : 1.5));
+    renderer.shadowMap.enabled = !lite;
+    renderer.shadowMap.type = THREE.PCFShadowMap;
     rendererRef.current = renderer;
 
     // 2. Lighting Setup
@@ -81,9 +83,9 @@ export default function SpatialSimulation({
 
     const sunLight = new THREE.DirectionalLight(0xffddaa, 2.2);
     sunLight.position.set(8, 9, 5);
-    sunLight.castShadow = true;
-    sunLight.shadow.mapSize.width = 1024;
-    sunLight.shadow.mapSize.height = 1024;
+    sunLight.castShadow = !lite;
+    sunLight.shadow.mapSize.width = 512;
+    sunLight.shadow.mapSize.height = 512;
     sunLight.shadow.camera.near = 0.5;
     sunLight.shadow.camera.far = 25;
     scene.add(sunLight);
@@ -91,7 +93,7 @@ export default function SpatialSimulation({
     // Warm pendant lamp point light
     const lampLight = new THREE.PointLight(0xff9944, 1.8, 10);
     lampLight.position.set(-1.2, 2.6, 0.5);
-    lampLight.castShadow = true;
+    lampLight.castShadow = false;
     scene.add(lampLight);
 
     lightsRef.current = { ambientLight, sunLight, lampLight };
@@ -136,13 +138,12 @@ export default function SpatialSimulation({
 
     // Glass Window Pane
     const windowGeo = new THREE.PlaneGeometry(8, 5.5);
-    const windowMat = new THREE.MeshPhysicalMaterial({
-      color: 0xCCE3EB,
-      transmission: 0.9,
-      opacity: 0.35,
+    const windowMat = new THREE.MeshStandardMaterial({
+      color: 0x9ec8d6,
       transparent: true,
-      roughness: 0.1,
-      reflectivity: 0.8
+      opacity: 0.35,
+      roughness: 0.12,
+      metalness: 0.2
     });
     const windowMesh = new THREE.Mesh(windowGeo, windowMat);
     windowMesh.position.set(7.85, 3.5, 4.5);
@@ -272,7 +273,7 @@ export default function SpatialSimulation({
     }
 
     // 5. Ambient Atmospheric Dust / Sunlight Particles
-    const particleCount = 200;
+    const particleCount = lite ? 40 : 80;
     const particleGeo = new THREE.BufferGeometry();
     const particlePos = new Float32Array(particleCount * 3);
     for (let i = 0; i < particleCount * 3; i += 3) {
@@ -299,7 +300,7 @@ export default function SpatialSimulation({
 
     const handleMouseMove = (e) => {
       if (!isDraggingRef.current) {
-        // Subtle Parallax when hovering
+        if (lite) return;
         const rect = containerRef.current.getBoundingClientRect();
         const normX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
         const normY = -(((e.clientY - rect.top) / rect.height) * 2 - 1);
@@ -330,10 +331,13 @@ export default function SpatialSimulation({
     };
 
     const domElement = containerRef.current;
+    const pausedRef = { current: false };
     domElement.addEventListener('mousedown', handleMouseDown);
-    window.addEventListener('mousemove', handleMouseMove);
+    domElement.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseup', handleMouseUp);
-    domElement.addEventListener('wheel', handleWheel, { passive: false });
+    if (!lite) {
+      domElement.addEventListener('wheel', handleWheel, { passive: false });
+    }
 
     // 7. Render Animation Loop
     let lastTime = performance.now();
@@ -341,8 +345,8 @@ export default function SpatialSimulation({
 
     const animate = (time) => {
       animationFrameRef.current = requestAnimationFrame(animate);
+      if (pausedRef.current || document.hidden) return;
 
-      // Smooth camera interpolation
       currentRotationRef.current.x += (targetRotationRef.current.x - currentRotationRef.current.x) * 0.08;
       currentRotationRef.current.y += (targetRotationRef.current.y - currentRotationRef.current.y) * 0.08;
 
@@ -352,25 +356,17 @@ export default function SpatialSimulation({
       camera.position.y = 3.2 + currentRotationRef.current.x * 3.5;
       camera.lookAt(0, 1.4, 0);
 
-      // Slowly float dust particles
       if (particlesRef.current) {
-        const positions = particlesRef.current.geometry.attributes.position.array;
-        for (let p = 1; p < positions.length; p += 3) {
-          positions[p] += Math.sin(time * 0.001 + p) * 0.002;
-          if (positions[p] > 5) positions[p] = 0.5;
-        }
-        particlesRef.current.geometry.attributes.position.needsUpdate = true;
+        particlesRef.current.rotation.y = time * 0.00004;
+        particlesRef.current.position.y = Math.sin(time * 0.0004) * 0.12;
       }
 
-      // Telemetry FPS calculation
       frameCount++;
-      if (time - lastTime >= 1000) {
-        setTelemetry(prev => ({
-          ...prev,
-          fps: frameCount
-        }));
+      if (!lite && time - lastTime >= 1000) {
+        const fps = frameCount;
         frameCount = 0;
         lastTime = time;
+        setTelemetry((prev) => (prev.fps === fps ? prev : { ...prev, fps }));
       }
 
       renderer.render(scene, camera);
@@ -389,16 +385,29 @@ export default function SpatialSimulation({
     };
     window.addEventListener('resize', handleResize);
 
+    const io = new IntersectionObserver(([entry]) => {
+      pausedRef.current = !entry.isIntersecting;
+    }, { threshold: 0.08 });
+    io.observe(domElement);
+
     return () => {
       cancelAnimationFrame(animationFrameRef.current);
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
       domElement.removeEventListener('mousedown', handleMouseDown);
+      domElement.removeEventListener('mousemove', handleMouseMove);
       domElement.removeEventListener('wheel', handleWheel);
+      io.disconnect();
+      scene.traverse((obj) => {
+        if (obj.geometry) obj.geometry.dispose();
+        if (obj.material) {
+          const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
+          mats.forEach((m) => m.dispose());
+        }
+      });
       renderer.dispose();
     };
-  }, []);
+  }, [lite]);
 
   // Update Lighting according to Time of Day
   useEffect(() => {
@@ -486,7 +495,7 @@ export default function SpatialSimulation({
     <div 
       ref={containerRef}
       className={`relative w-full overflow-hidden bg-charcoal-800 text-ivory select-none transition-all duration-500 ${
-        isFullscreen ? 'fixed inset-0 z-50 h-screen' : 'h-[640px] md:h-[720px] rounded-3xl shadow-soft-xl border border-charcoal-400/30'
+        isFullscreen ? 'fixed inset-0 z-50 h-screen' : 'h-[480px] md:h-[560px] rounded-3xl shadow-soft-xl border border-charcoal-400/30'
       }`}
     >
       {/* 3D WebGL Canvas */}
@@ -587,7 +596,7 @@ export default function SpatialSimulation({
             }}
             className="relative flex items-center justify-center focus:outline-none"
           >
-            <span className="absolute w-8 h-8 rounded-full bg-terracotta/30 animate-ping pointer-events-none" />
+            {!lite && <span className="absolute w-8 h-8 rounded-full bg-terracotta/30 animate-ping pointer-events-none" />}
             <span className="relative w-7 h-7 rounded-full bg-charcoal-700 text-ivory border-2 border-terracotta flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform">
               <Sparkles className="w-3.5 h-3.5 text-terracotta" />
             </span>

@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 import { QUIZ_QUESTIONS } from '../data/mockData';
 import { soundEngine } from '../utils/audio';
+import SafeImage from './SafeImage';
 
 export default function FlatmateQuizModal({
   isOpen,
@@ -318,7 +319,7 @@ export default function FlatmateQuizModal({
                     }}
                     className="p-3.5 rounded-2xl glass-card border border-ivory-300 dark:border-charcoal-500 hover:border-terracotta cursor-pointer transition-all flex items-center gap-3 group"
                   >
-                    <img
+                    <SafeImage
                       src={p.images[0]}
                       alt={p.title}
                       className="w-16 h-16 rounded-xl object-cover shrink-0"

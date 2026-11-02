@@ -74,11 +74,17 @@ export const INITIAL_PROPERTIES = [
       walkability: 96,
       cafes: 99,
       noiseLevel: "Tranquil residential pocket"
-    }
+    },
+    rooms: [
+      { id: "r1", name: "Living Commons & Dining", sqft: 380, status: "Shared", occupant: "All Flatmates", photo: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80", acoustic: "24 dB", daylight: "South Facing (All Day)" },
+      { id: "r2", name: "Chef's Kitchen & Island", sqft: 190, status: "Shared", occupant: "All Flatmates", photo: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80", acoustic: "28 dB", daylight: "East Facing (Morning Sun)" },
+      { id: "r3", name: "Private Bedroom 01", sqft: 240, status: "Occupied", occupant: "Astrid (UX Director)", photo: "https://images.unsplash.com/photo-1598928506311-c55ded91a20c?auto=format&fit=crop&w=800&q=80", acoustic: "22 dB", daylight: "South-West Facing" },
+      { id: "r4", name: "Available Suite 02", sqft: 220, status: "Vacant", occupant: "Available for You ($1,450/mo)", photo: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=800&q=80", acoustic: "20 dB (Acoustic Foam)", daylight: "South Facing + Balcony" }
+    ]
   },
   {
     id: "coh-02",
-    title: "Torup Eco-Loft & Garden",
+    title: "Torup Eco-Loft & Courtyard",
     subtitle: "Triple-height industrial loft with terrazzo floors, skylights & private botanical courtyard",
     neighborhood: "Kreuzberg, Paul-Lincke-Ufer",
     city: "Berlin, Germany",
@@ -150,7 +156,11 @@ export const INITIAL_PROPERTIES = [
       walkability: 98,
       cafes: 97,
       noiseLevel: "Vibrant waterside promenade"
-    }
+    },
+    rooms: [
+      { id: "r1", name: "Double-Height Atrium Lounge", sqft: 420, status: "Shared", occupant: "All Flatmates", photo: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=800&q=80", acoustic: "26 dB", daylight: "Skylight & Garden Glass" },
+      { id: "r2", name: "Master Suite with Terrazzo Bath", sqft: 280, status: "Vacant", occupant: "Available Now (€920/mo)", photo: "https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=800&q=80", acoustic: "18 dB (Quiet Zone)", daylight: "Courtyard Garden View" }
+    ]
   },
   {
     id: "coh-03",
@@ -213,7 +223,11 @@ export const INITIAL_PROPERTIES = [
       walkability: 99,
       cafes: 94,
       noiseLevel: "Very quiet residential park edge"
-    }
+    },
+    rooms: [
+      { id: "r1", name: "Penthouse Conservatory", sqft: 350, status: "Shared", occupant: "All Flatmates", photo: "https://images.unsplash.com/photo-1502005229762-ee1b2b804561?auto=format&fit=crop&w=800&q=80", acoustic: "20 dB", daylight: "360-Degree Skyline" },
+      { id: "r2", name: "East Sun Bedroom", sqft: 195, status: "Vacant", occupant: "Available Dec 15 ($1,100/mo)", photo: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=800&q=80", acoustic: "19 dB", daylight: "Sunrise Over Mariatorget" }
+    ]
   },
   {
     id: "coh-04",
@@ -287,11 +301,15 @@ export const INITIAL_PROPERTIES = [
       walkability: 99,
       cafes: 98,
       noiseLevel: "Energetic creative district"
-    }
+    },
+    rooms: [
+      { id: "r1", name: "Foundry Library & Salon", sqft: 400, status: "Shared", occupant: "All Flatmates", photo: "https://images.unsplash.com/photo-1554995207-c18c203602cb?auto=format&fit=crop&w=800&q=80", acoustic: "24 dB", daylight: "Industrial Vault Skylights" },
+      { id: "r2", name: "Timber Trusses Bedroom", sqft: 240, status: "Vacant", occupant: "Available Nov 20 (£1,280/mo)", photo: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?auto=format&fit=crop&w=800&q=80", acoustic: "22 dB", daylight: "North Light (Uniform Studio Light)" }
+    ]
   },
   {
     id: "coh-05",
-    title: "Pacific Heights Sun Gallery",
+    title: "Pacific Heights Sun Residence",
     subtitle: "Mid-century architectural residence with Japanese cedar soaking tub & Golden Gate vistas",
     neighborhood: "Pacific Heights, Vallejo St",
     city: "San Francisco, California",
@@ -349,7 +367,11 @@ export const INITIAL_PROPERTIES = [
       walkability: 94,
       cafes: 91,
       noiseLevel: "Serene & upscale residential"
-    }
+    },
+    rooms: [
+      { id: "r1", name: "Panoramic Bay Salon", sqft: 450, status: "Shared", occupant: "All Flatmates", photo: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80", acoustic: "22 dB", daylight: "Golden Gate Sunset Exposure" },
+      { id: "r2", name: "Master Suite & Zen Balcony", sqft: 310, status: "Vacant", occupant: "Available Nov 25 ($1,850/mo)", photo: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80", acoustic: "19 dB", daylight: "Private Western Balcony" }
+    ]
   },
   {
     id: "coh-06",
@@ -411,7 +433,11 @@ export const INITIAL_PROPERTIES = [
       walkability: 100,
       cafes: 99,
       noiseLevel: "Charming historic neighborhood"
-    }
+    },
+    rooms: [
+      { id: "r1", name: "Canal-View Living Salon", sqft: 320, status: "Shared", occupant: "All Flatmates", photo: "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=800&q=80", acoustic: "25 dB", daylight: "Direct Canal Water Reflections" },
+      { id: "r2", name: "Courtyard Bedroom Suite", sqft: 205, status: "Vacant", occupant: "Available Dec 5 (€990/mo)", photo: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80", acoustic: "18 dB (Leafy Quiet)", daylight: "Morning Sun on Ivy Courtyard" }
+    ]
   }
 ];
 
@@ -424,42 +450,44 @@ export const INITIAL_USER = {
   verified: true,
   bio: "Product designer who loves quiet mornings, clean architectural spaces, and exploring neighborhood bakeries. Non-smoker, early riser, values considerate and open communication.",
   lifestyle: {
-    sleep: "Early Bird",
-    cleanliness: "Immaculate",
-    workStyle: "Hybrid Designer",
-    guests: "Occasional weekend dinners",
+    sleep: "Early Bird (6:30 AM - 10:30 PM)",
+    cleanliness: "Immaculate (Clean-as-you-go)",
+    workStyle: "Hybrid Product Designer",
+    guests: "Occasional weekend dinners (24h heads-up)",
     pets: "Loves cats & quiet dogs"
   }
 };
 
 export const INITIAL_APPLICATIONS = [
   {
-    id: "app-8419",
+    id: "APP-8419",
     propertyId: "coh-01",
     propertyTitle: "The Kanso Nordic Atelier",
-    location: "Brooklyn, New York",
+    location: "Williamsburg, Brooklyn, NY",
     roomType: "Private Room",
     monthlyRent: 1450,
     appliedDate: "2026-11-01",
-    tourDate: "2026-11-06 at 2:30 PM",
-    tourType: "3D Spatial Virtual Tour",
+    tourDate: "Friday, Nov 6 at 2:30 PM",
+    tourType: "Guided Video Walkthrough",
     status: "Viewing Confirmed",
-    statusColor: "sage",
+    statusBadge: "Confirmed",
+    statusColor: "emerald",
     primaryFlatmate: "Astrid Lindholm",
     flatmateAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80"
   },
   {
-    id: "app-3290",
+    id: "APP-3290",
     propertyId: "coh-04",
     propertyTitle: "The Shoreditch Foundry Commons",
-    location: "London, United Kingdom",
+    location: "Redchurch St, London",
     roomType: "Private Room",
     monthlyRent: 1280,
     appliedDate: "2026-10-28",
-    tourDate: "2026-11-10 at 11:00 AM",
+    tourDate: "Tuesday, Nov 10 at 11:00 AM",
     tourType: "In-Person Walkthrough",
     status: "Under Review by Flatmates",
-    statusColor: "terracotta",
+    statusBadge: "In Review",
+    statusColor: "amber",
     primaryFlatmate: "Miles Hawthorne",
     flatmateAvatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=400&q=80"
   }
@@ -472,28 +500,43 @@ export const INITIAL_MESSAGES = [
     flatmateRole: "Spatial UX Director",
     flatmateAvatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80",
     propertyTitle: "The Kanso Nordic Atelier",
-    lastMessage: "Looking forward to our virtual walkthrough this Friday! Let me know if you have questions.",
+    online: true,
+    lastMessage: "Looking forward to our virtual walkthrough this Friday! Let me know if you have any questions.",
     lastTime: "10:14 AM",
     unread: false,
     history: [
-      { sender: "them", text: "Hi Alexander! Astrid here from The Kanso Atelier. We loved your profile and shared interest in architecture and quiet mornings.", time: "Yesterday, 3:45 PM" },
-      { sender: "me", text: "Hi Astrid! Thanks so much for reaching out. The atelier looks stunning, especially the natural light and kitchen setup.", time: "Yesterday, 4:10 PM" },
-      { sender: "them", text: "Looking forward to our virtual walkthrough this Friday! Let me know if you have questions.", time: "10:14 AM" }
+      { id: 1, sender: "them", text: "Hi Alexander! Astrid here from The Kanso Atelier. We loved your application and your focus on clean shared counters and quiet weekday evenings.", time: "Yesterday, 3:45 PM" },
+      { id: 2, sender: "me", text: "Hi Astrid! Thanks so much for reaching out. The atelier looks stunning, especially the natural light and kitchen setup.", time: "Yesterday, 4:10 PM" },
+      { id: 3, sender: "them", text: "Looking forward to our virtual walkthrough this Friday! Let me know if you have any questions.", time: "10:14 AM" }
     ]
   },
   {
     id: "msg-thread-2",
     flatmateName: "Lukas Weber",
-    flatmateRole: "Torup Eco-Loft",
+    flatmateRole: "Climate Tech Founder",
     flatmateAvatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
-    propertyTitle: "Torup Eco-Loft & Garden",
+    propertyTitle: "Torup Eco-Loft & Courtyard",
+    online: false,
     lastMessage: "Would you be up for a quick 10-minute video call to say hello?",
     lastTime: "Yesterday",
     unread: true,
     history: [
-      { sender: "them", text: "Hey Alexander! Saw your compatibility score came in at 95% with our eco-loft. Would you be up for a quick 10-minute video call to say hello?", time: "Yesterday, 6:30 PM" }
+      { id: 1, sender: "them", text: "Hey Alexander! Saw your compatibility score came in at 95% with our eco-loft. Would you be up for a quick 10-minute video call to say hello?", time: "Yesterday, 6:30 PM" }
     ]
   }
+];
+
+export const INITIAL_CHORES = [
+  { id: "c1", title: "Dishwasher Unload & Sanitize", assignee: "Alexander Kim", due: "Today", status: "Pending", category: "Kitchen" },
+  { id: "c2", title: "Recycling & Compost Disposal", assignee: "Astrid Lindholm", due: "Tomorrow", status: "Completed", category: "Waste" },
+  { id: "c3", title: "Living Room Plant Misting & Care", assignee: "Julian Rivera", due: "Thursday", status: "Pending", category: "Botanical" },
+  { id: "c4", title: "Coffee Bar Restock (Oat Milk & Beans)", assignee: "Alexander Kim", due: "Saturday", status: "Pending", category: "Pantry" }
+];
+
+export const INITIAL_EXPENSES = [
+  { id: "e1", description: "Gigabit Fiber Wi-Fi", amount: 80, splitWith: "3 People", myShare: 26.67, status: "Paid" },
+  { id: "e2", description: "Organic Coffee & Olive Oil Restock", amount: 48, splitWith: "3 People", myShare: 16.00, status: "Paid" },
+  { id: "e3", description: "Bi-Weekly Eco Deep Cleaning", amount: 180, splitWith: "3 People", myShare: 60.00, status: "Due Nov 15" }
 ];
 
 export const QUIZ_QUESTIONS = [

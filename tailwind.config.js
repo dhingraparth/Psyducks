@@ -61,6 +61,8 @@ export default {
       animation: {
         'pulse-subtle': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'float-slow': 'float 6s ease-in-out infinite',
+        'spin-slow': 'spin 8s linear infinite',
+        fadeIn: 'fadeIn 0.45s ease-out both',
       },
       keyframes: {
         float: {

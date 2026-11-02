@@ -7,7 +7,7 @@ import {
   ShieldCheck, 
   Users, 
   CheckCircle2, 
-  Box, 
+  LayoutGrid, 
   Calendar, 
   Clock, 
   Coffee, 
@@ -25,7 +25,7 @@ export default function PropertyDetailModal({
   isFavorite,
   onToggleFavorite,
   onBookTour,
-  onEnterSimulation
+  onOpenFloorPlan
 }) {
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState(0);
 
@@ -47,16 +47,18 @@ export default function PropertyDetailModal({
           </div>
 
           <div className="flex items-center gap-2">
-            <button
-              onClick={() => {
-                soundEngine.playPortalEnter();
-                onEnterSimulation();
-              }}
-              className="px-3.5 py-1.5 rounded-full bg-gradient-to-r from-terracotta to-terracotta-dark text-white text-xs font-semibold flex items-center gap-1.5 shadow-sm hover:brightness-105"
-            >
-              <Box className="w-3.5 h-3.5" />
-              <span>Walkthrough in 3D</span>
-            </button>
+            {onOpenFloorPlan && (
+              <button
+                onClick={() => {
+                  soundEngine.playClick();
+                  onOpenFloorPlan();
+                }}
+                className="px-3.5 py-1.5 rounded-full bg-ivory-200 dark:bg-charcoal-600 text-charcoal dark:text-ivory text-xs font-semibold flex items-center gap-1.5 hover:bg-ivory-300"
+              >
+                <LayoutGrid className="w-3.5 h-3.5 text-amber-600" />
+                <span>Floor Plan</span>
+              </button>
+            )}
 
             <button
               onClick={() => onToggleFavorite(property.id)}
@@ -159,7 +161,7 @@ export default function PropertyDetailModal({
             </p>
           </div>
 
-          {/* Flatmate Profiles (Crucial Shared Living Feature) */}
+          {/* Flatmate Profiles */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-bold text-charcoal dark:text-ivory flex items-center gap-2">
@@ -251,7 +253,7 @@ export default function PropertyDetailModal({
             </div>
           </div>
 
-          {/* Neighborhood & Walkability Radar */}
+          {/* Neighborhood Radar */}
           <div className="space-y-4">
             <h2 className="text-lg font-bold text-charcoal dark:text-ivory">
               Neighborhood & Accessibility
@@ -276,7 +278,7 @@ export default function PropertyDetailModal({
             </div>
           </div>
 
-          {/* Bottom Sticky Action / Booking Banner */}
+          {/* Bottom Sticky Action Banner */}
           <div className="p-6 rounded-3xl bg-charcoal text-ivory dark:bg-charcoal-600 border border-charcoal-500 flex flex-col sm:flex-row items-center justify-between gap-6 shadow-soft-xl">
             <div>
               <div className="text-xs uppercase tracking-wider text-ivory-300 font-mono">Monthly All-Inclusive Rent</div>
@@ -290,17 +292,6 @@ export default function PropertyDetailModal({
             </div>
 
             <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto">
-              <button
-                onClick={() => {
-                  soundEngine.playPortalEnter();
-                  onEnterSimulation();
-                }}
-                className="flex-1 sm:flex-none px-5 py-3 rounded-2xl bg-white/10 hover:bg-white/20 text-white font-semibold text-xs transition-all flex items-center justify-center gap-2 border border-white/15"
-              >
-                <Box className="w-4 h-4 text-terracotta" />
-                <span>3D Walkthrough</span>
-              </button>
-
               <button
                 onClick={() => {
                   soundEngine.playSuccess();

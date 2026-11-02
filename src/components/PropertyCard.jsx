@@ -7,7 +7,7 @@ import {
   ShieldCheck, 
   MapPin, 
   Users, 
-  Box, 
+  LayoutGrid, 
   ArrowUpRight 
 } from 'lucide-react';
 import { soundEngine } from '../utils/audio';
@@ -17,7 +17,7 @@ export default function PropertyCard({
   isFavorite,
   onToggleFavorite,
   onSelectProperty,
-  onEnterSimulation
+  onOpenFloorPlan
 }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
@@ -44,7 +44,7 @@ export default function PropertyCard({
         soundEngine.playClick();
         onSelectProperty(property);
       }}
-      className="group relative rounded-3xl overflow-hidden glass-card hover:shadow-soft-xl transition-all duration-300 border border-ivory-300/80 dark:border-charcoal-400/80 cursor-pointer flex flex-col h-full"
+      className="group relative rounded-3xl overflow-hidden glass-card hover:shadow-soft-xl transition-all duration-300 border border-ivory-300 dark:border-charcoal-500 cursor-pointer flex flex-col h-full bg-white dark:bg-charcoal-700"
     >
       {/* Image Carousel Container */}
       <div className="relative aspect-[4/3] w-full overflow-hidden bg-charcoal-700">
@@ -96,19 +96,21 @@ export default function PropertyCard({
             <span>{property.compatibilityScore}% Match</span>
           </div>
 
-          {/* Top Actions: Favorite Heart & 3D Walkthrough Trigger */}
+          {/* Top Actions: Floor Plan Quick Link & Favorite Heart */}
           <div className="flex items-center gap-1.5">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                soundEngine.playPortalEnter();
-                onEnterSimulation();
-              }}
-              className="p-2 rounded-full glass-pill text-charcoal hover:text-terracotta dark:text-ivory transition-transform hover:scale-105"
-              title="Enter 3D Spatial Walkthrough"
-            >
-              <Box className="w-3.5 h-3.5 text-terracotta" />
-            </button>
+            {onOpenFloorPlan && (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  soundEngine.playClick();
+                  onOpenFloorPlan();
+                }}
+                className="p-2 rounded-full glass-pill text-charcoal hover:text-amber-600 dark:text-ivory transition-transform hover:scale-105"
+                title="Inspect Floor Plan Layout"
+              >
+                <LayoutGrid className="w-3.5 h-3.5 text-amber-600" />
+              </button>
+            )}
 
             <button
               onClick={handleFavoriteClick}
@@ -126,7 +128,7 @@ export default function PropertyCard({
 
         {/* Room Type Tag */}
         <div className="absolute bottom-3 left-3">
-          <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-black/50 backdrop-blur-md text-white border border-white/20 uppercase tracking-wider">
+          <span className="px-2.5 py-1 rounded-full text-[10px] font-semibold bg-black/50 backdrop-blur-md text-white border border-white/20 uppercase tracking-wider font-mono">
             {property.roomType} • {property.sqft} sq ft
           </span>
         </div>
@@ -161,7 +163,7 @@ export default function PropertyCard({
         </div>
 
         {/* Flatmate Avatars & Pricing Breakdown */}
-        <div className="pt-3 border-t border-ivory-300/80 dark:border-charcoal-500/50 flex items-center justify-between">
+        <div className="pt-3 border-t border-ivory-200 dark:border-charcoal-500/50 flex items-center justify-between">
           {/* Flatmates */}
           <div className="flex items-center">
             <div className="flex -space-x-2 overflow-hidden">
@@ -182,7 +184,7 @@ export default function PropertyCard({
 
           {/* Price */}
           <div className="text-right">
-            <div className="text-base font-bold text-charcoal dark:text-ivory">
+            <div className="text-base font-bold text-charcoal dark:text-ivory font-mono">
               ${property.pricePerMonth}
               <span className="text-xs font-normal text-charcoal-300 dark:text-charcoal-200">/mo</span>
             </div>
