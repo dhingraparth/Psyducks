@@ -75,7 +75,8 @@ export default function BookingModal({
         statusBadge: 'Confirmed',
         statusColor: 'emerald',
         primaryFlatmate: property.flatmates[0]?.name || "Lead Resident",
-        flatmateAvatar: property.flatmates[0]?.avatar || ""
+        flatmateAvatar: property.flatmates[0]?.avatar || "",
+        propertyPhoto: property.images[0]
       });
     }
   };

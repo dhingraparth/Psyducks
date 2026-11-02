@@ -12,17 +12,23 @@ import {
   Maximize2, 
   Layers, 
   Eye, 
-  ShieldCheck 
+  ShieldCheck,
+  Building2,
+  MapPin
 } from 'lucide-react';
 import SmartImage from './SmartImage';
 import { soundEngine } from '../utils/audio';
 
 export default function InteractiveFloorPlan({
   property,
+  properties = [],
+  onSelectAnotherProperty,
   onBookRoom,
-  onSelectProperty
+  onSelectProperty,
+  isFullPage = false
 }) {
-  const rooms = property?.rooms || [];
+  const currentProperty = property || properties[0];
+  const rooms = currentProperty?.rooms || [];
   const [selectedRoomId, setSelectedRoomId] = useState(rooms[rooms.length - 1]?.id || "r4");
   const [daylightFilter, setDaylightFilter] = useState("golden");
 
@@ -33,8 +39,9 @@ export default function InteractiveFloorPlan({
     setSelectedRoomId(roomId);
   };
 
-  return (
+  const containerContent = (
     <div className="bg-white dark:bg-charcoal-800 rounded-3xl p-6 sm:p-8 border border-ivory-300 dark:border-charcoal-500 shadow-soft-lg">
+      
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-ivory-200 dark:border-charcoal-600">
         <div>
@@ -43,12 +50,34 @@ export default function InteractiveFloorPlan({
             <span>Architectural Layout Navigator</span>
           </div>
           <h3 className="text-xl sm:text-2xl font-bold text-charcoal dark:text-ivory font-sans">
-            Interactive Floor Plan & Acoustic Zones (India)
+            Interactive Floor Plan & Acoustic Zones ({currentProperty?.city || "India"})
           </h3>
           <p className="text-xs sm:text-sm text-charcoal-300 dark:text-charcoal-200 mt-0.5">
             Select any room to inspect natural daylight angles, acoustic isolation (dB), and current roommate allocation.
           </p>
         </div>
+
+        {/* Property Selector if multiple properties passed */}
+        {properties && properties.length > 1 && onSelectAnotherProperty && (
+          <div className="flex items-center gap-2">
+            <MapPin className="w-4 h-4 text-terracotta" />
+            <select
+              value={currentProperty?.id}
+              onChange={(e) => {
+                const found = properties.find(p => p.id === e.target.value);
+                if (found) {
+                  onSelectAnotherProperty(found);
+                  if (found.rooms?.[0]) setSelectedRoomId(found.rooms[0].id);
+                }
+              }}
+              className="text-xs font-semibold py-2 px-3 rounded-xl border border-ivory-300 dark:border-charcoal-500 bg-ivory-50 dark:bg-charcoal-700 text-charcoal dark:text-ivory cursor-pointer focus:outline-none"
+            >
+              {properties.map(p => (
+                <option key={p.id} value={p.id}>{p.title} ({p.neighborhood})</option>
+              ))}
+            </select>
+          </div>
+        )}
 
         {/* Daylight Mode Controls */}
         <div className="flex items-center gap-1.5 bg-ivory-200/80 dark:bg-charcoal-700 p-1 rounded-full border border-ivory-300 dark:border-charcoal-600">
@@ -101,6 +130,7 @@ export default function InteractiveFloorPlan({
 
       {/* Main Floor Plan Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start pt-6">
+        
         {/* Left Interactive Blueprint Blocks */}
         <div className="lg:col-span-7 bg-ivory-100 dark:bg-charcoal-700/60 rounded-2xl p-5 border border-ivory-300 dark:border-charcoal-600 relative overflow-hidden">
           <div 
@@ -165,7 +195,9 @@ export default function InteractiveFloorPlan({
 
           <div className="mt-4 pt-3 border-t border-ivory-200 dark:border-charcoal-600 flex flex-wrap items-center justify-between text-xs text-charcoal-300 dark:text-charcoal-200 font-mono">
             <span>● Click any room to view photography & acoustic isolation</span>
-            <span className="text-emerald-600 dark:text-emerald-400 font-bold">Suite 02 is Available in Indiranagar</span>
+            <span className="text-emerald-600 dark:text-emerald-400 font-bold">
+              {rooms.some(r => r.status === 'Vacant') ? 'Vacant Suite Available for You' : 'Fully Occupied Cohort'}
+            </span>
           </div>
         </div>
 
@@ -180,15 +212,15 @@ export default function InteractiveFloorPlan({
               transition={{ duration: 0.2 }}
               className="space-y-4"
             >
-              {/* Photo Preview (SmartImage guaranteed visible) */}
+              {/* Photo Preview (SmartImage with real architectural photo) */}
               <div className="relative aspect-[16/10] rounded-2xl overflow-hidden shadow-soft-sm border border-ivory-300 dark:border-charcoal-500 group bg-ivory-200 dark:bg-charcoal-600">
                 <SmartImage
                   src={selectedRoom.photo}
                   alt={selectedRoom.name}
-                  className="w-full h-full group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-md px-2.5 py-1 rounded-full text-[10px] font-mono text-white z-10">
-                  {selectedRoom.status === 'Vacant' ? 'Available for Move-in' : 'Shared Common Space'}
+                  {selectedRoom.status === 'Vacant' ? 'Available for Move-in' : 'Shared Living Space'}
                 </div>
               </div>
 
@@ -221,7 +253,7 @@ export default function InteractiveFloorPlan({
                 <button
                   onClick={() => {
                     soundEngine.playSuccess();
-                    if (onBookRoom) onBookRoom(property);
+                    if (onBookRoom) onBookRoom(currentProperty);
                   }}
                   className="w-full py-3 px-4 rounded-2xl bg-terracotta hover:bg-terracotta-dark text-white font-bold text-xs transition-all flex items-center justify-center gap-2 shadow-soft-sm"
                 >
@@ -232,7 +264,7 @@ export default function InteractiveFloorPlan({
                 <button
                   onClick={() => {
                     soundEngine.playClick();
-                    if (onSelectProperty) onSelectProperty(property);
+                    if (onSelectProperty) onSelectProperty(currentProperty);
                   }}
                   className="w-full py-3 px-4 rounded-2xl border border-ivory-300 dark:border-charcoal-500 hover:bg-ivory-200 text-charcoal dark:text-ivory font-semibold text-xs transition-all text-center"
                 >
@@ -243,6 +275,17 @@ export default function InteractiveFloorPlan({
           </AnimatePresence>
         </div>
       </div>
+
     </div>
   );
+
+  if (isFullPage) {
+    return (
+      <div className="min-h-screen pt-24 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {containerContent}
+      </div>
+    );
+  }
+
+  return containerContent;
 }

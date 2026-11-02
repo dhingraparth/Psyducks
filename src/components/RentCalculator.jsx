@@ -21,7 +21,8 @@ import {
 import { soundEngine } from '../utils/audio';
 
 export default function RentCalculator({
-  onShowToast
+  onShowToast,
+  isFullPage = false
 }) {
   const [totalRent, setTotalRent] = useState(65000);
   const [tenantsCount, setTenantsCount] = useState(3);
@@ -108,7 +109,7 @@ export default function RentCalculator({
   };
 
   return (
-    <section id="calculator" className="py-16 md:py-24 bg-ivory dark:bg-charcoal-700">
+    <section id="calculator" className={`bg-ivory dark:bg-charcoal-700 ${isFullPage ? 'min-h-screen pt-24 pb-20' : 'py-16 md:py-24'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 space-y-4">
